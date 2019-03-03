@@ -10,25 +10,23 @@
         android:id="@+id/productRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        tools:listitem="@layout/item_product_client" />
+        android:layout_margin="8dp"
+        tools:listitem="@layout/item_product_clerk" />
 
-        <ProgressBar
-            android:id="@+id/loadingProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/colorAccent"
-            />
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/colorAccent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"
-        android:src="@drawable/ic_add"
         android:layout_width="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_add" />
 
 </FrameLayout>

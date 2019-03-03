@@ -1,60 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    app:cardCornerRadius="4dp">
+    android:layout_margin="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="10dp">
 
         <TextView
-            android:id="@+id/nameTextView"
-            android:layout_width="match_parent"
+            android:id="@+id/nameLabel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/name"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="match_parent"
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:textColor="@color/black"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/nameLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/nameLabel" />
+
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/description"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+            app:layout_constraintTop_toBottomOf="@id/nameLabel" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/descriptionLabel"
+            app:layout_constraintStart_toStartOf="@id/nameTextView" />
+
+        <TextView
+            android:id="@+id/quantityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/quantity"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionLabel" />
 
         <TextView
             android:id="@+id/quantityTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:textColor="@color/black"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/quantityLabel"
+            app:layout_constraintStart_toStartOf="@id/nameTextView" />
+
+        <TextView
+            android:id="@+id/priceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/price"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/descriptionTextView" />
+            app:layout_constraintTop_toBottomOf="@id/quantityLabel" />
 
         <TextView
             android:id="@+id/priceTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:textColor="@color/black"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/priceLabel"
+            app:layout_constraintStart_toStartOf="@id/nameTextView" />
+
+        <TextView
+            android:id="@+id/statusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/status"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantityTextView" />
+            app:layout_constraintTop_toBottomOf="@id/priceLabel" />
 
         <TextView
             android:id="@+id/statusTextView"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/priceTextView" />
-
+            app:layout_constraintBottom_toBottomOf="@id/statusLabel"
+            app:layout_constraintStart_toStartOf="@id/nameTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
