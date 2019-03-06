@@ -37,7 +37,7 @@
                     android:id="@+id/nameInput"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:hint="Name"
+                    android:hint="@string/name"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -52,7 +52,7 @@
                     android:id="@+id/descriptionInput"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:hint="Description"
+                    android:hint="@string/description"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/nameInput">
@@ -67,7 +67,7 @@
                     android:id="@+id/quantityInput"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:hint="Quantity"
+                    android:hint="@string/quantity"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/descriptionInput">
@@ -83,7 +83,7 @@
                     android:id="@+id/priceInput"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:hint="Price"
+                    android:hint="@string/price"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quantityInput">
@@ -99,7 +99,7 @@
                     android:id="@+id/statusInput"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:hint="Status"
+                    android:hint="@string/status"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/priceInput">

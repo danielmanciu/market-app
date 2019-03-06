@@ -10,12 +10,12 @@
         android:id="@+id/clientButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Client" />
+        android:text="@string/client" />
 
     <Button
         android:id="@+id/clerkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clerk" />
+        android:text="@string/clerk" />
 
 </LinearLayout>
