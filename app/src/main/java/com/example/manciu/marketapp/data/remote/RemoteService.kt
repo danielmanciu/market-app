@@ -19,7 +19,7 @@ interface RemoteService {
     fun getAvailableProducts(): Flowable<Response<List<ProductRemoteEntity>>>
 
     @DELETE("$PRODUCT/{$ID}")
-    fun deleteProduct(@Path(ID) id: Int): Observable<Response<Void>>
+    fun deleteProduct(@Path(ID) id: Int): Observable<Response<Unit>>
 
     @POST(PRODUCT)
     fun insertProduct(@Body product: ProductRemoteEntity): Observable<Response<ProductRemoteEntity>>

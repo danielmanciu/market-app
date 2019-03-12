@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.page.client.list
+package com.example.manciu.marketapp.page.client.list.available
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,24 +19,23 @@ import com.example.manciu.marketapp.utils.callback.BuyDialogListener
 import com.example.manciu.marketapp.utils.callback.ItemClickCallback
 import com.example.manciu.marketapp.utils.showShortToast
 import com.google.gson.Gson
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list_client.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import timber.log.Timber
-import java.util.stream.Collectors
 import javax.inject.Inject
 
-class ListFragmentClient : BaseFragment(), BuyDialogListener {
+class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, ClientAvailableListViewModelProvider>(),
+        BuyDialogListener {
+
+    override fun getViewModelClass() = ClientAvailableListViewModel::class.java
 
     private val buyProductClickCallback = object : ItemClickCallback {
-        override fun onClick(productEntity: ProductEntity) {
+        override fun onClick(product: ProductEntity) {
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                showBuyDialog(productEntity)
+                showBuyDialog(product)
             }
         }
     }
@@ -45,7 +44,7 @@ class ListFragmentClient : BaseFragment(), BuyDialogListener {
     lateinit var httpClient: OkHttpClient
 
     private lateinit var webSocket: WebSocket
-    private lateinit var productsAdapter: ListAdapterClient
+    private lateinit var productsAdapter: ClientAvailableListAdapter
     private lateinit var buyDialogFragment: BuyDialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,11 +54,13 @@ class ListFragmentClient : BaseFragment(), BuyDialogListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerViewAndWebSocket()
+        viewModel.availableListLiveData.observe(this, Observer {
+            productsAdapter.setProductList(it)
 
-        showBoughtProductsButton.setOnClickListener {
-            navController.navigate(R.id.action_listFragmentClient_to_boughtListFragmentClient)
-        }
+            hideLoadingIndicator()
+        })
+
+        setupRecyclerViewAndWebSocket()
     }
 
     override fun onDestroy() {
@@ -69,9 +70,7 @@ class ListFragmentClient : BaseFragment(), BuyDialogListener {
     }
 
     private fun setupRecyclerViewAndWebSocket() {
-        showLoadingIndicator()
-
-        productsAdapter = ListAdapterClient(buyProductClickCallback)
+        productsAdapter = ClientAvailableListAdapter(buyProductClickCallback)
 
         val request: Request = Request.Builder()
                 .url(WEB_SOCKET_URL)
@@ -91,71 +90,32 @@ class ListFragmentClient : BaseFragment(), BuyDialogListener {
         productRecyclerView.adapter = productsAdapter
         productRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val disposable = viewModel.getAvailableProductsRemote()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    response.body()?.let {
-                        hideLoadingIndicator()
+        showLoadingIndicator()
 
-                        productsAdapter.setProductList(it.stream()
-                                .map(ProductRemoteEntity::convertRemoteToLocal)
-                                .collect(Collectors.toList()))
-                    }
-
-                },
-                        { error ->
-                            showShortToast(activity, "Unable to get available products list.")
-                            Timber.e(error, "Unable to get available products list.")
-                        }
-                )
-
-        addDisposable(disposable)
+        viewModel.getAvailableProductsRemote()
     }
 
-    override fun buyProduct(productEntity: ProductEntity, quantity: Int) {
-
-        if (productEntity.quantity < quantity) {
-            showShortToast(activity, "Only ${productEntity.quantity} available.")
+    override fun buyProduct(product: ProductEntity, quantity: Int) {
+        if (product.quantity < quantity) {
+            showShortToast(activity, "Only ${product.quantity} available.")
             return
         }
 
-        val boughtProduct = productEntity.copy(quantity = quantity)
+        val productToBuy = product.copy(quantity = quantity)
 
-        val liveData: MutableLiveData<ProductEntity> = MutableLiveData()
-
-        val d: Disposable = viewModel.buyProduct(boughtProduct)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    response.body()?.let {
-                        viewModel.insertProductLocal(boughtProduct)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe {
-                                    liveData.value = boughtProduct
-                                }
-                    }
-                },
-                        { error ->
-                            showShortToast(activity, "Unable to process productEntity puchase.")
-                            Timber.e(error, "Unable to process productEntity puchase.")
-                        }
-                )
-
-        liveData.observe(this, Observer {
+        val buyProductCallback: (ProductEntity) -> Unit = {
             dismissBuyDialog()
             navigateToDetailsFragment(it)
 
             Timber.i("Successfully added ${it.name}.")
-        })
+        }
 
-        addDisposable(d)
+        viewModel.buyProduct(productToBuy, buyProductCallback)
     }
 
-    private fun showBuyDialog(productEntity: ProductEntity) {
+    private fun showBuyDialog(product: ProductEntity) {
         fragmentManager?.let {
-            buyDialogFragment = BuyDialogFragment.createBuyDialogFragment(it, this, productEntity)
+            buyDialogFragment = BuyDialogFragment.createBuyDialogFragment(it, this, product)
         }
     }
 
@@ -177,7 +137,7 @@ class ListFragmentClient : BaseFragment(), BuyDialogListener {
         val productBundle = Bundle()
         productBundle.putParcelable(PRODUCT, product)
 
-        navController.navigate(R.id.action_listFragmentClient_to_detailsFragment, productBundle)
+        navController.navigate(R.id.action_viewPagerFragment_to_detailsFragment, productBundle)
     }
 
 }

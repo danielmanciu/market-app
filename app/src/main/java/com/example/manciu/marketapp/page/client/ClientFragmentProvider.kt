@@ -1,8 +1,11 @@
 package com.example.manciu.marketapp.page.client
 
 import com.example.manciu.marketapp.di.scope.FragmentScope
-import com.example.manciu.marketapp.page.client.list.ListFragmentClient
-import com.example.manciu.marketapp.page.client.list_bought.BoughtListFragmentClient
+import com.example.manciu.marketapp.page.client.list.ViewPagerFragment
+import com.example.manciu.marketapp.page.client.list.available.ClientAvailableListFragment
+import com.example.manciu.marketapp.page.client.list.available.ClientAvailableListModule
+import com.example.manciu.marketapp.page.client.list.bought.ClientBoughtListFragment
+import com.example.manciu.marketapp.page.client.list.bought.ClientBoughtListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,11 +13,11 @@ import dagger.android.ContributesAndroidInjector
 abstract class ClientFragmentProvider {
 
     @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun provideListFragment(): ListFragmentClient
+    @ContributesAndroidInjector(modules = [ClientAvailableListModule::class])
+    abstract fun provideAvailableListFragment(): ClientAvailableListFragment
 
     @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun provideBoughtListFragment(): BoughtListFragmentClient
+    @ContributesAndroidInjector(modules = [ClientBoughtListModule::class])
+    abstract fun provideBoughtListFragment(): ClientBoughtListFragment
 
 }

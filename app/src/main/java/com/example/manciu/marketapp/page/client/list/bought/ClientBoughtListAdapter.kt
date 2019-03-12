@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.page.client.list_bought
+package com.example.manciu.marketapp.page.client.list.bought
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,8 @@ import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.persistence.ProductEntity
 import kotlinx.android.synthetic.main.item_product_client.view.*
 
-class BoughtListAdapterClient :
-        RecyclerView.Adapter<BoughtListAdapterClient.ProductViewHolder>() {
+class ClientBoughtListAdapter :
+        RecyclerView.Adapter<ClientBoughtListAdapter.ProductViewHolder>() {
 
     var products: List<ProductEntity>? = null
 
@@ -32,14 +32,13 @@ class BoughtListAdapterClient :
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int) {
+            val product: ProductEntity = products!![position]
 
-            val productEntity: ProductEntity = products!![position]
-
-            itemView.productTextView.text = formatProductItemDetails(productEntity)
+            itemView.productTextView.text = formatProductItemDetails(product)
         }
 
-        private fun formatProductItemDetails(productEntity: ProductEntity): String =
-                productEntity.run {
+        private fun formatProductItemDetails(product: ProductEntity): String =
+                product.run {
                     "$name (x$quantity) - $$price"
                 }
 

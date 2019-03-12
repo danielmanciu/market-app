@@ -20,13 +20,4 @@
         android:layout_gravity="center"
         android:indeterminateTint="@color/colorAccent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/showBoughtProductsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_list" />
-
 </FrameLayout>

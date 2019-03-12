@@ -18,14 +18,14 @@ class BuyDialogFragment : DialogFragment() {
     companion object {
         private const val BUY_DIALOG = "buy_dialog"
         private lateinit var buyDialogListener: BuyDialogListener
-        private lateinit var productEntity: ProductEntity
+        private lateinit var product: ProductEntity
 
         fun createBuyDialogFragment(fragmentManager: FragmentManager,
                                     listener: BuyDialogListener,
-                                    productEntity: ProductEntity
+                                    productToBuy: ProductEntity
         ): BuyDialogFragment {
             buyDialogListener = listener
-            Companion.productEntity = productEntity
+            product = productToBuy
 
             return BuyDialogFragment().apply {
                 show(fragmentManager, BUY_DIALOG)
@@ -56,7 +56,7 @@ class BuyDialogFragment : DialogFragment() {
             if (!quantityEditText.text.isNullOrBlank()) {
                 val newQuantity = parseInt(quantityEditText.text.toString())
 
-                buyDialogListener.buyProduct(productEntity, newQuantity)
+                buyDialogListener.buyProduct(product, newQuantity)
             }
         }
     }

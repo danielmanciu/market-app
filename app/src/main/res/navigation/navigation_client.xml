@@ -3,35 +3,34 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_client"
-    app:startDestination="@id/listFragmentClient">
+    app:startDestination="@id/viewPagerFragment">
 
     <fragment
-        android:id="@+id/listFragmentClient"
-        android:name="com.example.manciu.marketapp.page.client.list.ListFragmentClient"
-        android:label="ListFragmentClient">
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.manciu.marketapp.page.client.list.ViewPagerFragment"
+        android:label="ViewPagerFragment">
 
         <action
-            android:id="@+id/action_listFragmentClient_to_detailsFragment"
-            app:destination="@id/detailsFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/listFragmentClient" />
-
-        <action
-            android:id="@+id/action_listFragmentClient_to_boughtListFragmentClient"
-            app:destination="@id/boughtListFragmentClient"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/listFragmentClient" />
+            android:id="@+id/action_viewPagerFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.manciu.marketapp.page.client.details.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment">
+
+        <action
+            android:id="@+id/action_detailsFragment_pop"
+            app:popUpTo="@id/viewPagerFragment"
+            app:launchSingleTop="true" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/boughtListFragmentClient"
-        android:name="com.example.manciu.marketapp.page.client.list_bought.BoughtListFragmentClient"
-        android:label="BoughtListFragmentClient" />
+        android:name="com.example.manciu.marketapp.page.client.list.bought.ClientBoughtListFragment"
+        android:label="ClientBoughtListFragment" />
 
 </navigation>

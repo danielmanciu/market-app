@@ -1,9 +1,10 @@
-package com.example.manciu.marketapp.page.client.list_bought
+package com.example.manciu.marketapp.page.client.list.bought
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
@@ -14,9 +15,13 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list_client.*
 import timber.log.Timber
 
-class BoughtListFragmentClient : BaseFragment() {
+class ClientBoughtListFragment :
+        BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
 
-    private lateinit var productsAdapter: BoughtListAdapterClient
+    override fun getViewModelClass(): Class<ClientBoughtListViewModel> =
+            ClientBoughtListViewModel::class.java
+
+    private lateinit var productsAdapter: ClientBoughtListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_client, container, false)
@@ -25,33 +30,24 @@ class BoughtListFragmentClient : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.boughtProductsLiveData.observe(this, Observer {
+            hideLoadingIndicator()
+
+            productsAdapter.setProductList(it)
+        })
+
         setupRecyclerView()
-        showBoughtProductsButton.hide()
     }
 
     private fun setupRecyclerView() {
         showLoadingIndicator()
 
-        productsAdapter = BoughtListAdapterClient()
+        productsAdapter = ClientBoughtListAdapter()
 
         productRecyclerView.adapter = productsAdapter
         productRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val d: Disposable = viewModel.getBoughtProductsLocal()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    hideLoadingIndicator()
-
-                    productsAdapter.setProductList(it)
-                },
-                        { error ->
-                            showShortToast(activity, "Unable to get product list.")
-                            Timber.e(error, "Unable to get product list.")
-                        }
-                )
-
-        addDisposable(d)
+        viewModel.getBoughtProductsLocal()
     }
 
     private fun showLoadingIndicator() {
