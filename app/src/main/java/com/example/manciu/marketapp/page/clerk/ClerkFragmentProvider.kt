@@ -2,7 +2,9 @@ package com.example.manciu.marketapp.page.clerk
 
 import com.example.manciu.marketapp.di.scope.FragmentScope
 import com.example.manciu.marketapp.page.clerk.add.AddFragment
-import com.example.manciu.marketapp.page.clerk.list.ListFragmentClerk
+import com.example.manciu.marketapp.page.clerk.add.AddModule
+import com.example.manciu.marketapp.page.clerk.list.ClerkListFragment
+import com.example.manciu.marketapp.page.clerk.list.ClerkListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,11 +12,11 @@ import dagger.android.ContributesAndroidInjector
 abstract class ClerkFragmentProvider {
 
     @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun provideListFragment(): ListFragmentClerk
+    @ContributesAndroidInjector(modules = [ClerkListModule::class])
+    abstract fun provideListFragment(): ClerkListFragment
 
     @FragmentScope
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [AddModule::class])
     abstract fun provideAddFragment(): AddFragment
 
 }

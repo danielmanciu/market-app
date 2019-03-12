@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/listFragmentClerk"
-        android:name="com.example.manciu.marketapp.page.clerk.list.ListFragmentClerk"
-        android:label="ListFragmentClerk">
+        android:name="com.example.manciu.marketapp.page.clerk.list.ClerkListFragment"
+        android:label="ClerkListFragment">
 
         <action
             android:id="@+id/action_listFragmentClerk_to_addFragment"

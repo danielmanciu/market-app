@@ -1,23 +1,19 @@
 package com.example.manciu.marketapp.page.clerk.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.showShortToast
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_add.*
-import timber.log.Timber
 
-class AddFragment : BaseFragment() {
+class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
+
+    override fun getViewModelClass() = AddViewModel::class.java
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add, container, false)
@@ -47,25 +43,13 @@ class AddFragment : BaseFragment() {
             return
         }
 
-        val productEntity: ProductEntity = getProductFromInputs()
-        val liveData: MutableLiveData<ProductEntity> = MutableLiveData()
+        val product: ProductEntity = getProductFromInputs()
 
-        val d: Disposable = viewModel.insertProductRemote(productEntity)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    response.body()?.let {
-                        liveData.value = it.convertRemoteToLocal()
+        viewModel.insertProductRemote(product)
 
-                        showShortToast(activity, "Successfully added ${it.name}")
-                    }
-                },
-                        { error -> Timber.e(error, "Unable to add product.") }
-                )
+        viewModel.addProductLiveData.observe(this, Observer {
+            showShortToast(activity, "Successfully added ${it.name}")
 
-        addDisposable(d)
-
-        liveData.observe(this, Observer {
             navController.popBackStack()
         })
     }

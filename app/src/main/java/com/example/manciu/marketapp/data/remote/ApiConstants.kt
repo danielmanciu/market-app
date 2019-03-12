@@ -2,8 +2,8 @@ package com.example.manciu.marketapp.data.remote
 
 object ApiConstants {
 
-    const val API_BASE_URL = "http://192.168.43.8:2024"
-    const val WEB_SOCKET_URL = "ws://192.168.43.8:2024"
+    const val API_BASE_URL = "http://192.168.16.106:2024"
+    const val WEB_SOCKET_URL = "ws://192.168.16.106:2024"
 
     const val ACCEPT_HEADER = "Accept"
     const val APPLICATION_JSON = "application/json"

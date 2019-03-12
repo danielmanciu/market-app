@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
@@ -13,6 +14,6 @@ interface ProductDao {
     fun getAllProducts(): Flowable<List<ProductEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProduct(productEntity: ProductEntity)
+    fun insertProduct(product: ProductEntity)
 
 }

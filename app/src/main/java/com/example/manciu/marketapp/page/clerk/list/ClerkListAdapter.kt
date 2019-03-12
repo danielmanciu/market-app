@@ -9,9 +9,9 @@ import com.example.manciu.marketapp.data.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.callback.ItemClickCallback
 import kotlinx.android.synthetic.main.item_product_clerk.view.*
 
-class ListAdapterClerk(
+class ClerkListAdapter(
         private val deleteClickCallback: ItemClickCallback
-) : RecyclerView.Adapter<ListAdapterClerk.ProductViewHolder>() {
+) : RecyclerView.Adapter<ClerkListAdapter.ProductViewHolder>() {
 
     var products: List<ProductEntity>? = null
 
@@ -34,19 +34,17 @@ class ListAdapterClerk(
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int, listener: ItemClickCallback) {
+            val product: ProductEntity = products!![position]
 
-            val productEntity: ProductEntity = products!![position]
+            itemView.productTextView.text = formatProductItemDetails(product)
 
-            itemView.productTextView.text = formatProductItemDetails(productEntity)
-
-            itemView.deleteButton.setOnClickListener { listener.onClick(productEntity) }
+            itemView.deleteButton.setOnClickListener { listener.onClick(product) }
         }
 
-        private fun formatProductItemDetails(productEntity: ProductEntity): String =
-                productEntity.run {
+        private fun formatProductItemDetails(product: ProductEntity): String =
+                product.run {
                     "$name (x$quantity) - $price"
                 }
-
 
     }
 

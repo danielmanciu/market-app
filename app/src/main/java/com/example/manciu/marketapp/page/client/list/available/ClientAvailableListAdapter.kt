@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.page.client.list
+package com.example.manciu.marketapp.page.client.list.available
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,9 @@ import com.example.manciu.marketapp.data.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.callback.ItemClickCallback
 import kotlinx.android.synthetic.main.item_product_client.view.*
 
-class ListAdapterClient(
+class ClientAvailableListAdapter(
         private val buyClickCallback: ItemClickCallback
-) : RecyclerView.Adapter<ListAdapterClient.ProductViewHolder>() {
+) : RecyclerView.Adapter<ClientAvailableListAdapter.ProductViewHolder>() {
 
     var products: List<ProductEntity>? = null
 
@@ -20,9 +20,9 @@ class ListAdapterClient(
         notifyDataSetChanged()
     }
 
-    fun addProductAndNotify(productEntity: ProductEntity) {
+    fun addProductAndNotify(product: ProductEntity) {
         products?.toMutableList().let {
-            it?.add(productEntity)
+            it?.add(product)
             notifyItemInserted(it?.size ?: 0)
             products = it
         }
@@ -42,16 +42,15 @@ class ListAdapterClient(
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int, listener: ItemClickCallback) {
+            val product: ProductEntity = products!![position]
 
-            val productEntity: ProductEntity = products!![position]
+            itemView.productTextView.text = formatProductItemDetails(product)
 
-            itemView.productTextView.text = formatProductItemDetails(productEntity)
-
-            itemView.buyButton.setOnClickListener { listener.onClick(productEntity) }
+            itemView.buyButton.setOnClickListener { listener.onClick(product) }
         }
 
-        private fun formatProductItemDetails(productEntity: ProductEntity): String =
-                productEntity.run {
+        private fun formatProductItemDetails(product: ProductEntity): String =
+                product.run {
                     "$name (x$quantity) - $$price"
                 }
 
