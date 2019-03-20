@@ -6,18 +6,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.persistence.ProductEntity
-import com.example.manciu.marketapp.utils.callback.ItemClickCallback
+import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
 import kotlinx.android.synthetic.main.item_product_clerk.view.*
 
 class ClerkListAdapter(
-        private val deleteClickCallback: ItemClickCallback
+        private val deleteClickCallback: ItemPositionClickCallback
 ) : RecyclerView.Adapter<ClerkListAdapter.ProductViewHolder>() {
 
-    var products: List<ProductEntity>? = null
+    var products: MutableList<ProductEntity>? = null
 
     fun setProductList(list: List<ProductEntity>) {
-        this.products = list
+        this.products = list.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun deleteProductAndNotify(position: Int) {
+        products?.run {
+            this.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, this.size)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -33,18 +41,17 @@ class ClerkListAdapter(
 
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(position: Int, listener: ItemClickCallback) {
+        fun bind(position: Int, listener: ItemPositionClickCallback) {
             val product: ProductEntity = products!![position]
 
-            itemView.productTextView.text = formatProductItemDetails(product)
+            itemView.productNameTextView.text = product.name
+            itemView.productQuantityTextView.text = "${product.quantity}"
+            itemView.productPriceTextView.text = "$${product.price}"
 
-            itemView.deleteButton.setOnClickListener { listener.onClick(product) }
+            itemView.deleteButton.setOnClickListener {
+                listener.onClick(product, position)
+            }
         }
-
-        private fun formatProductItemDetails(product: ProductEntity): String =
-                product.run {
-                    "$name (x$quantity) - $price"
-                }
 
     }
 

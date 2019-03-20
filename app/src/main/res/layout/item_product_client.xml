@@ -2,41 +2,127 @@
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_margin="4dp"
     app:cardCornerRadius="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/productTextView"
-            style="?android:attr/textAppearanceLarge"
+        <FrameLayout
+            android:id="@+id/detailsClickableArea"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_gray"
+            android:paddingBottom="10dp">
 
-        <ImageButton
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/productNameTextView"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/quantityIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_quantity"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintEnd_toStartOf="@id/productQuantityTextView"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productNameTextView"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/productQuantityTextView"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/quantityIcon"
+                    app:layout_constraintEnd_toStartOf="@id/priceIcon"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/quantityIcon"
+                    app:layout_constraintTop_toTopOf="@id/quantityIcon" />
+
+                <ImageView
+                    android:id="@+id/priceIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_price_tag"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@id/quantityIcon"
+                    app:layout_constraintEnd_toStartOf="@id/productPriceTextView"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/productQuantityTextView"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/productPriceTextView"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/priceIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/priceIcon"
+                    app:layout_constraintTop_toTopOf="@id/priceIcon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/buyButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@string/buy_button_content_description"
-            android:src="@drawable/ic_buy"
-            android:text="@string/buy"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_accent"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/productPriceTextView">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--<ImageView-->
+            <!--android:id="@+id/deleteIcon"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:src="@drawable/ic_delete"-->
+            <!--android:tint="@color/black"-->
+            <!--tools:ignore="ContentDescription" />-->
+
+            <TextView
+                android:id="@+id/buyButtonTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:src="@drawable/ic_delete"
+                android:text="@string/buy"
+                android:textAllCaps="true"
+                android:tint="@color/black"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
 

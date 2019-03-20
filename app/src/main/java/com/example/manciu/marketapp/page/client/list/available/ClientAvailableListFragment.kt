@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
 import com.example.manciu.marketapp.data.remote.ApiConstants.WEB_SOCKET_URL
 import com.example.manciu.marketapp.data.remote.ProductRemoteEntity
-import com.example.manciu.marketapp.utils.BuyDialogFragment
-import com.example.manciu.marketapp.utils.PRODUCT
+import com.example.manciu.marketapp.page.dialog.BuyDialogFragment
+import com.example.manciu.marketapp.utils.ID
+import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.callback.BuyDialogListener
 import com.example.manciu.marketapp.utils.callback.ItemClickCallback
+import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
+import com.example.manciu.marketapp.utils.observeNonNull
 import com.example.manciu.marketapp.utils.showShortToast
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_list_client.*
@@ -32,10 +34,18 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
 
     override fun getViewModelClass() = ClientAvailableListViewModel::class.java
 
-    private val buyProductClickCallback = object : ItemClickCallback {
+    private val showProductDetailsClickCallback = object : ItemClickCallback {
         override fun onClick(product: ProductEntity) {
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                showBuyDialog(product)
+                showDetailsFragment(product)
+            }
+        }
+    }
+
+    private val buyProductClickCallback = object : ItemPositionClickCallback {
+        override fun onClick(product: ProductEntity, position: Int) {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                showBuyDialog(product, position)
             }
         }
     }
@@ -54,13 +64,23 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.availableListLiveData.observe(this, Observer {
-            productsAdapter.setProductList(it)
+        viewModel.availableListLiveData.observeNonNull(this) {
+            when (it) {
+                is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
+                is Outcome.Success -> {
+                    productsAdapter.setProductList(it.data)
+                    hideLoading()
+                }
+                is Outcome.Failure -> showError(it.error.localizedMessage)
+            }
+        }
 
-            hideLoadingIndicator()
+        clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
+            viewModel.getAvailableProductsRemote()
         })
 
         setupRecyclerViewAndWebSocket()
+        viewModel.getAvailableProductsRemote()
     }
 
     override fun onDestroy() {
@@ -70,7 +90,7 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     }
 
     private fun setupRecyclerViewAndWebSocket() {
-        productsAdapter = ClientAvailableListAdapter(buyProductClickCallback)
+        productsAdapter = ClientAvailableListAdapter(buyProductClickCallback, showProductDetailsClickCallback)
 
         val request: Request = Request.Builder()
                 .url(WEB_SOCKET_URL)
@@ -88,14 +108,13 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
         })
 
         productRecyclerView.adapter = productsAdapter
-        productRecyclerView.layoutManager = LinearLayoutManager(context)
+        productRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        showLoadingIndicator()
-
-        viewModel.getAvailableProductsRemote()
+        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation_from_bottom)
+        productRecyclerView.layoutAnimation = animation
     }
 
-    override fun buyProduct(product: ProductEntity, quantity: Int) {
+    override fun buyProduct(product: ProductEntity, quantity: Int, position: Int) {
         if (product.quantity < quantity) {
             showShortToast(activity, "Only ${product.quantity} available.")
             return
@@ -105,17 +124,25 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
 
         val buyProductCallback: (ProductEntity) -> Unit = {
             dismissBuyDialog()
-            navigateToDetailsFragment(it)
 
-            Timber.i("Successfully added ${it.name}.")
+            productsAdapter.changeProductAndNotify(it, position)
+
+            Timber.i("Successfully bought ${it.name} (x$quantity).")
         }
 
         viewModel.buyProduct(productToBuy, buyProductCallback)
     }
 
-    private fun showBuyDialog(product: ProductEntity) {
+    private fun showDetailsFragment(product: ProductEntity) {
+        val productBundle = Bundle()
+        productBundle.putInt(ID, product.id)
+
+        navController.navigate(R.id.action_viewPagerFragment_to_detailsFragment, productBundle)
+    }
+
+    private fun showBuyDialog(product: ProductEntity, position: Int) {
         fragmentManager?.let {
-            buyDialogFragment = BuyDialogFragment.createBuyDialogFragment(it, this, product)
+            buyDialogFragment = BuyDialogFragment.createBuyDialogFragment(it, this, product, position)
         }
     }
 
@@ -123,21 +150,18 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
         buyDialogFragment.dismiss()
     }
 
-    private fun showLoadingIndicator() {
+    private fun showLoading() {
         productRecyclerView.visibility = View.GONE
-        loadingProgressBar.visibility = View.VISIBLE
+        clientListEmptyLayout.showLoading()
     }
 
-    private fun hideLoadingIndicator() {
+    private fun hideLoading() {
         productRecyclerView.visibility = View.VISIBLE
-        loadingProgressBar.visibility = View.GONE
+        clientListEmptyLayout.hide()
     }
 
-    private fun navigateToDetailsFragment(product: ProductEntity) {
-        val productBundle = Bundle()
-        productBundle.putParcelable(PRODUCT, product)
-
-        navController.navigate(R.id.action_viewPagerFragment_to_detailsFragment, productBundle)
+    private fun showError(message: String?) {
+        clientListEmptyLayout.showError(message)
     }
 
 }

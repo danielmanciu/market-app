@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.observeNonNull
 import com.example.manciu.marketapp.utils.showShortToast
 import kotlinx.android.synthetic.main.fragment_add.*
 
@@ -25,6 +27,11 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
         confirmButton.setOnClickListener {
             insertProduct()
         }
+
+        addEmptyLayout.setRetryClickListener(View.OnClickListener {
+            insertProduct()
+        })
+
     }
 
     private fun getProductFromInputs() = ProductEntity(
@@ -47,11 +54,28 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
 
         viewModel.insertProductRemote(product)
 
-        viewModel.addProductLiveData.observe(this, Observer {
-            showShortToast(activity, "Successfully added ${it.name}")
+        viewModel.addProductLiveData.observeNonNull(this) {
+            when (it) {
+                is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
+                is Outcome.Success -> {
+                    showShortToast(activity, "Successfully added ${it.data.name}")
+                    navController.popBackStack()
+                }
+                is Outcome.Failure -> showError("An error occurred. Could not add product.")
+            }
+        }
+    }
 
-            navController.popBackStack()
-        })
+    private fun showError(error: String?) {
+        addEmptyLayout.showError(error)
+    }
+
+    private fun showLoading() {
+        addEmptyLayout.showLoading()
+    }
+
+    private fun hideLoading() {
+        addEmptyLayout.hide()
     }
 
     private fun areInputsEmpty(): Boolean {

@@ -1,16 +1,27 @@
 <resources>
     <string name="app_name">Market App</string>
 
-    <string name="buy">Buy</string>
+    <!-- Activities -->
+    <string name="client">Client</string>
+    <string name="clerk">Clerk</string>
+
+    <!-- Details -->
     <string name="price">Price</string>
     <string name="status">Status</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="quantity">Quantity</string>
 
-    <string name="buy_button_content_description">Buy a product.</string>
-    <string name="delete_button_content_description">Delete a product.</string>
-    <string name="client">Client</string>
-    <string name="clerk">Clerk</string>
+    <!-- Client List -->
+    <string name="buy">Buy</string>
     <string name="how_many">How many:</string>
+
+    <!-- Empty Layout -->
+    <string name="error_retry">Retry</string>
+    <string name="no_results">No results</string>
+
+    <!-- Clerk List -->
+    <string name="price_tag">$%d</string>
+    <string name="delete">Delete</string>
+
 </resources>
