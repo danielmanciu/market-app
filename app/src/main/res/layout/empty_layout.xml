@@ -39,4 +39,5 @@
             android:layout_height="wrap_content"
             android:text="@string/error_retry" />
     </LinearLayout>
+
 </merge>

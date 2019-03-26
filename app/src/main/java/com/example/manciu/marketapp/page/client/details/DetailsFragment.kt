@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.transition.TransitionInflater
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
-import com.example.manciu.marketapp.utils.ID
-import com.example.manciu.marketapp.utils.Outcome
-import com.example.manciu.marketapp.utils.observeNonNull
+import com.example.manciu.marketapp.utils.*
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>() {
@@ -18,15 +17,33 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
 
     private var product: ProductEntity? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_details, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        TransitionInflater.from(activity).inflateTransition(R.transition.details_transition).run {
+            duration = activity!!.resources.getInteger(R.integer.details_transition_duration).toLong()
+            this@DetailsFragment.sharedElementEnterTransition = this
+            this@DetailsFragment.setEnterSharedElementCallback(EnterSharedElementCallback(activity!!))
+        }
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_details, container, false)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let { args ->
-            val id: Int = args.getInt(ID)
+            product = args.getParcelable(PRODUCT)
+            val id: Int = product!!.id
+
+            rootCardView.transitionName = "$id-rootCardView"
+            nameTextView.transitionName = "$id-name"
+            quantityIcon.transitionName = "$id-quantityIcon"
+            quantityTextView.transitionName = "$id-quantity"
+            priceIcon.transitionName = "$id-priceIcon"
+            priceTextView.transitionName = "$id-price"
 
             viewModel.productLiveData.observeNonNull(this) {
                 when (it) {
@@ -35,8 +52,12 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
                         product = it.data
                         populateTextViews()
                         hideLoading()
+                        detailsSwipeRefreshLayout.isRefreshing = false
                     }
-                    is Outcome.Failure -> showError(it.error.localizedMessage)
+                    is Outcome.Failure -> {
+                        showError(it.error.localizedMessage)
+                        detailsSwipeRefreshLayout.isRefreshing = false
+                    }
                 }
             }
 
@@ -44,19 +65,22 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
                 viewModel.getProductRemote(id)
             })
 
-            viewModel.getProductRemote(id)
+            detailsSwipeRefreshLayout.setOnRefreshListener {
+                viewModel.getProductRemote(id)
+            }
+
+            populateTextViews()
         }
     }
 
-    private fun populateTextViews() {
+    private fun populateTextViews() =
         product?.run {
             nameTextView.text = name
             descriptionTextView.text = description
             quantityTextView.text = "$quantity"
-            priceTextView.text = "$price"
+            priceTextView.text = "$$price"
             statusTextView.text = status
         }
-    }
 
     private fun showLoading() {
         rootCardView.visibility = View.GONE

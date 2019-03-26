@@ -16,13 +16,12 @@ class MarketApplication : DaggerApplication() {
         Timber.plant(timber)
     }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        val appComponent = DaggerAppComponent.builder()
-                .application(this)
-                .build()
-        appComponent.inject(this)
-
-        return appComponent
-    }
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+            DaggerAppComponent.builder()
+                    .application(this)
+                    .build()
+                    .also {
+                        it.inject(this)
+                    }
 
 }

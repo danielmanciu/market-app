@@ -36,9 +36,11 @@ class ClientBoughtListAdapter :
         fun bind(position: Int) {
             val product: ProductEntity = products!![position]
 
-            itemView.productNameTextView.text = product.name
-            itemView.productQuantityTextView.text = "${product.quantity}"
-            itemView.productPriceTextView.text = "$${product.price}"
+            itemView.run {
+                productNameTextView.text = product.name
+                productQuantityTextView.text = "${product.quantity}"
+                productPriceTextView.text = "$${product.price}"
+            }
         }
 
     }

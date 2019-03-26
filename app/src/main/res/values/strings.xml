@@ -15,6 +15,7 @@
     <!-- Client List -->
     <string name="buy">Buy</string>
     <string name="how_many">How many:</string>
+    <string name="transition_name_format">%d-%s</string>
 
     <!-- Empty Layout -->
     <string name="error_retry">Retry</string>

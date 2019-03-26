@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootCardView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,11 +28,12 @@
                 <TextView
                     android:id="@+id/productNameTextView"
                     style="?android:attr/textAppearanceLarge"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/item_large_text_size"
+                    android:autoSizeMaxTextSize="@dimen/details_large_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +57,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/item_small_text_size"
+                    android:autoSizeMaxTextSize="@dimen/details_large_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/quantityIcon"
                     app:layout_constraintEnd_toStartOf="@id/priceIcon"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -81,7 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/item_small_text_size"
+                    android:autoSizeMaxTextSize="@dimen/details_large_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/priceIcon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/priceIcon"

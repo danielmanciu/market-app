@@ -20,17 +20,17 @@ class ClerkListAdapter(
         notifyDataSetChanged()
     }
 
-    fun deleteProductAndNotify(position: Int) {
+    fun deleteProductAndNotify(position: Int) =
         products?.run {
             this.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, this.size)
         }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_product_clerk, parent, false)
+
         return ProductViewHolder(view)
     }
 
@@ -44,13 +44,16 @@ class ClerkListAdapter(
         fun bind(position: Int, listener: ItemPositionClickCallback) {
             val product: ProductEntity = products!![position]
 
-            itemView.productNameTextView.text = product.name
-            itemView.productQuantityTextView.text = "${product.quantity}"
-            itemView.productPriceTextView.text = "$${product.price}"
+            itemView.run {
+                productNameTextView.text = product.name
+                productQuantityTextView.text = "${product.quantity}"
+                productPriceTextView.text = "$${product.price}"
 
-            itemView.deleteButton.setOnClickListener {
-                listener.onClick(product, position)
+                deleteButton.setOnClickListener {
+                    listener.onClick(product, position)
+                }
             }
+
         }
 
     }

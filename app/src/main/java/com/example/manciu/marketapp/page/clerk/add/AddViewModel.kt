@@ -29,8 +29,8 @@ class AddViewModel(private val service: RemoteService) : BaseViewModel() {
                     }
                 },
                         { error ->
-                            Timber.e(error, "Unable to add product.")
                             addProductLiveData.value = Outcome.failure(error)
+                            Timber.e(error, "Unable to add product.")
                         }
                 )
 

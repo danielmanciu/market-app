@@ -1,3 +1,14 @@
 <resources>
 
+    <!-- Details -->
+    <dimen name="details_small_text_size">17sp</dimen>
+    <dimen name="details_description_text_size">20sp</dimen>
+    <dimen name="details_status_text_size">30sp</dimen>
+    <dimen name="details_large_text_size">45sp</dimen>
+    <dimen name="details_title_text_size">55sp</dimen>
+    <dimen name="details_spacing_size">35sp</dimen>
+
+    <!-- Item -->
+    <dimen name="item_small_text_size">14sp</dimen>
+    <dimen name="item_large_text_size">18sp</dimen>
 </resources>

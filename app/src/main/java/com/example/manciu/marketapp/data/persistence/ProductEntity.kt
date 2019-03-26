@@ -1,5 +1,6 @@
 package com.example.manciu.marketapp.data.persistence
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,8 +11,10 @@ import com.example.manciu.marketapp.data.persistence.PersistenceConstants.Produc
 import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_STATUS
 import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.TABLE_NAME
 import com.example.manciu.marketapp.data.remote.ProductRemoteEntity
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = TABLE_NAME)
+@Parcelize
 data class ProductEntity(
         @PrimaryKey
         var id: Int,
@@ -30,7 +33,7 @@ data class ProductEntity(
 
         @ColumnInfo(name = COLUMN_INFO_STATUS)
         val status: String
-) {
+) : Parcelable {
     fun convertLocalToRemote() = ProductRemoteEntity(
             id,
             name,

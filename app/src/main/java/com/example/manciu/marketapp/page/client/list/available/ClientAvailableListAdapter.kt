@@ -30,25 +30,26 @@ class ClientAvailableListAdapter(
         }
     }
 
-    fun changeProductAndNotify(product: ProductEntity, position: Int) {
-        if (product.quantity > 0) updateProductAndNotify(product, position)
-        else deleteProductAndNotify(position)
+    override fun getItemId(position: Int): Long {
+        return products!![position].id.toLong()
     }
 
-    private fun updateProductAndNotify(product: ProductEntity, position: Int) {
-        products?.run {
-            this[position] = product
-            notifyItemChanged(position)
-        }
-    }
+    fun changeProductAndNotify(product: ProductEntity, position: Int) =
+            if (product.quantity > 0) updateProductAndNotify(product, position)
+            else deleteProductAndNotify(position)
 
-    private fun deleteProductAndNotify(position: Int) {
-        products?.run {
-            this.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, this.size)
-        }
-    }
+    private fun updateProductAndNotify(product: ProductEntity, position: Int) =
+            products?.run {
+                this[position] = product
+                notifyItemChanged(position)
+            }
+
+    private fun deleteProductAndNotify(position: Int) =
+            products?.run {
+                this.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, this.size)
+            }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -67,13 +68,28 @@ class ClientAvailableListAdapter(
                  showDetailsClickCallback: ItemClickCallback,
                  buyClickCallback: ItemPositionClickCallback) {
             val product: ProductEntity = products!![position]
+            val id: Int = product.id
 
-            itemView.productNameTextView.text = product.name
-            itemView.productQuantityTextView.text = "${product.quantity}"
-            itemView.productPriceTextView.text = "$${product.price}"
+            itemView.run {
+                productNameTextView.text = product.name
+                productQuantityTextView.text = "${product.quantity}"
+                productPriceTextView.text = "$${product.price}"
 
-            itemView.detailsClickableArea.setOnClickListener { showDetailsClickCallback.onClick(product) }
-            itemView.buyButton.setOnClickListener { buyClickCallback.onClick(product, position) }
+                rootCardView.transitionName = "$id-rootCardView"
+                productNameTextView.transitionName = "$id-name"
+                quantityIcon.transitionName = "$id-quantityIcon"
+                productQuantityTextView.transitionName = "$id-quantity"
+                priceIcon.transitionName = "$id-priceIcon"
+                productPriceTextView.transitionName = "$id-price"
+
+                detailsClickableArea.setOnClickListener {
+                    showDetailsClickCallback.onClick(product, itemView)
+                }
+                buyButton.setOnClickListener {
+                    buyClickCallback.onClick(product, position)
+                }
+            }
+
         }
 
     }
