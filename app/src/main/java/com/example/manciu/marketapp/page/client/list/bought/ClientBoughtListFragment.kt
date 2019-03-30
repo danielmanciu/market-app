@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_client.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ClientBoughtListFragment :
         BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
@@ -44,6 +44,14 @@ class ClientBoughtListFragment :
 
         setupRecyclerView()
         viewModel.getBoughtProductsLocal()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.run {
+            backButton.setOnClickListener { onBackPressed() }
+        }
     }
 
     private fun setupRecyclerView() {

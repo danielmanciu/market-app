@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
 import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_clerk.*
-import android.view.animation.AnimationUtils
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelProvider>() {
@@ -47,7 +48,7 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
         })
 
         viewModel.clerkListLiveData.observeNonNull(this) {
-            when(it) {
+            when (it) {
                 is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
                 is Outcome.Success -> {
                     productsAdapter.setProductList(it.data)
@@ -60,6 +61,14 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
         setupRecyclerView()
 
         getProductsRemote()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.run {
+            backButton.setOnClickListener { onBackPressed() }
+        }
     }
 
     private fun setupRecyclerView() {

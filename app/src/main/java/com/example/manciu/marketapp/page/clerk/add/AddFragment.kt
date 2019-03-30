@@ -11,6 +11,7 @@ import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.observeNonNull
 import com.example.manciu.marketapp.utils.showShortToast
 import kotlinx.android.synthetic.main.fragment_add.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
 
@@ -29,7 +30,12 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
         addEmptyLayout.setRetryClickListener(View.OnClickListener {
             insertProduct()
         })
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity!!.backButton.setOnClickListener { navController.navigateUp() }
     }
 
     private fun getProductFromInputs() = ProductEntity(

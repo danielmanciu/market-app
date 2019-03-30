@@ -25,6 +25,7 @@ import com.example.manciu.marketapp.utils.showShortToast
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_list_client.*
 import kotlinx.android.synthetic.main.item_product_client.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
@@ -84,6 +85,14 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
 
         setupRecyclerViewAndWebSocket()
         viewModel.getAvailableProductsRemote()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.run {
+            backButton.setOnClickListener { onBackPressed() }
+        }
     }
 
     override fun onDestroy() {

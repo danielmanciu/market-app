@@ -6,8 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="4dp">
+    android:layout_margin="5dp"
+    app:cardCornerRadius="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:id="@+id/detailsClickableArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_gray"
+            android:background="@drawable/ripple_grey_rectangle"
             android:paddingBottom="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,6 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/item_large_text_size"
-                    android:autoSizeMaxTextSize="@dimen/details_large_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +57,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textSize="@dimen/item_small_text_size"
-                    android:autoSizeMaxTextSize="@dimen/details_large_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/quantityIcon"
                     app:layout_constraintEnd_toStartOf="@id/priceIcon"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -85,7 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textSize="@dimen/item_small_text_size"
-                    android:autoSizeMaxTextSize="@dimen/details_large_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/priceIcon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/priceIcon"
@@ -99,19 +96,11 @@
             android:id="@+id/buyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_accent"
+            android:background="@drawable/ripple_accent_rectangle"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/productPriceTextView">
-
-            <!--<ImageView-->
-            <!--android:id="@+id/deleteIcon"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:src="@drawable/ic_delete"-->
-            <!--android:tint="@color/black"-->
-            <!--tools:ignore="ContentDescription" />-->
 
             <TextView
                 android:id="@+id/buyButtonTextView"
