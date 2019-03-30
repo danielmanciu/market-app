@@ -13,8 +13,7 @@ class PersistenceModule {
     @Provides
     @ApplicationScope
     fun provideDatabase(context: Context): ProductDatabase =
-            Room.databaseBuilder(context, ProductDatabase::class.java, DATABASE_NAME)
-                    .build()
+            Room.databaseBuilder(context, ProductDatabase::class.java, DATABASE_NAME).build()
 
     @Provides
     @ApplicationScope

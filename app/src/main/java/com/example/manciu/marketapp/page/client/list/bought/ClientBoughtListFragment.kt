@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
-import com.example.manciu.marketapp.utils.showShortToast
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_client.*
-import timber.log.Timber
 
 class ClientBoughtListFragment :
         BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
@@ -30,34 +27,44 @@ class ClientBoughtListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.boughtProductsLiveData.observe(this, Observer {
-            hideLoadingIndicator()
+        viewModel.boughtProductsLiveData.observeNonNull(this) {
+            when (it) {
+                is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
+                is Outcome.Success -> {
+                    productsAdapter.setProductList(it.data)
+                    hideLoading()
+                }
+                is Outcome.Failure -> showError(it.error.localizedMessage)
+            }
+        }
 
-            productsAdapter.setProductList(it)
+        clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
+            viewModel.getBoughtProductsLocal()
         })
 
         setupRecyclerView()
+        viewModel.getBoughtProductsLocal()
     }
 
     private fun setupRecyclerView() {
-        showLoadingIndicator()
-
         productsAdapter = ClientBoughtListAdapter()
 
         productRecyclerView.adapter = productsAdapter
         productRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        viewModel.getBoughtProductsLocal()
     }
 
-    private fun showLoadingIndicator() {
+    private fun showLoading() {
         productRecyclerView.visibility = View.GONE
-        loadingProgressBar.visibility = View.VISIBLE
+        clientListEmptyLayout.showLoading()
     }
 
-    private fun hideLoadingIndicator() {
+    private fun hideLoading() {
         productRecyclerView.visibility = View.VISIBLE
-        loadingProgressBar.visibility = View.GONE
+        clientListEmptyLayout.hide()
+    }
+
+    private fun showError(message: String?) {
+        clientListEmptyLayout.showError(message)
     }
 
 }

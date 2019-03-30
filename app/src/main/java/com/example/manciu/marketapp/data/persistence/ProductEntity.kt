@@ -33,7 +33,6 @@ data class ProductEntity(
 
         @ColumnInfo(name = COLUMN_INFO_STATUS)
         val status: String
-
 ) : Parcelable {
     fun convertLocalToRemote() = ProductRemoteEntity(
             id,

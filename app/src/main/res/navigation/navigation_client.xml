@@ -12,7 +12,8 @@
 
         <action
             android:id="@+id/action_viewPagerFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:exitAnim="@anim/fade_out"/>
 
     </fragment>
 
@@ -23,8 +24,12 @@
 
         <action
             android:id="@+id/action_detailsFragment_pop"
-            app:popUpTo="@id/viewPagerFragment"
-            app:launchSingleTop="true" />
+            app:enterAnim="@anim/fragment_enter_transition"
+            app:exitAnim="@anim/fragment_exit_transition"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/fragment_pop_enter_transition"
+            app:popExitAnim="@anim/fragment_pop_exit_transition"
+            app:popUpTo="@id/viewPagerFragment" />
 
     </fragment>
 

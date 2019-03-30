@@ -20,7 +20,9 @@ class ClientBoughtListAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_bought_product_client, parent, false)
+                .inflate(R.layout.item_product_client, parent, false)
+        view.buyButton.visibility = View.GONE
+
         return ProductViewHolder(view)
     }
 
@@ -34,13 +36,12 @@ class ClientBoughtListAdapter :
         fun bind(position: Int) {
             val product: ProductEntity = products!![position]
 
-            itemView.productTextView.text = formatProductItemDetails(product)
+            itemView.run {
+                productNameTextView.text = product.name
+                productQuantityTextView.text = "${product.quantity}"
+                productPriceTextView.text = "$${product.price}"
+            }
         }
-
-        private fun formatProductItemDetails(product: ProductEntity): String =
-                product.run {
-                    "$name (x$quantity) - $$price"
-                }
 
     }
 

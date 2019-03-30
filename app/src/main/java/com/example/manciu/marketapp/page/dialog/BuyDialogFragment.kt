@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.utils
+package com.example.manciu.marketapp.page.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -19,13 +19,16 @@ class BuyDialogFragment : DialogFragment() {
         private const val BUY_DIALOG = "buy_dialog"
         private lateinit var buyDialogListener: BuyDialogListener
         private lateinit var product: ProductEntity
+        private var position: Int = -1
 
         fun createBuyDialogFragment(fragmentManager: FragmentManager,
                                     listener: BuyDialogListener,
-                                    productToBuy: ProductEntity
+                                    productToBuy: ProductEntity,
+                                    positionIntAdapter: Int
         ): BuyDialogFragment {
             buyDialogListener = listener
             product = productToBuy
+            position = positionIntAdapter
 
             return BuyDialogFragment().apply {
                 show(fragmentManager, BUY_DIALOG)
@@ -56,7 +59,9 @@ class BuyDialogFragment : DialogFragment() {
             if (!quantityEditText.text.isNullOrBlank()) {
                 val newQuantity = parseInt(quantityEditText.text.toString())
 
-                buyDialogListener.buyProduct(product, newQuantity)
+                if (position != -1) {
+                    buyDialogListener.buyProduct(product, newQuantity, position)
+                }
             }
         }
     }

@@ -1,0 +1,43 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/emptyLayoutProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/colorAccent"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/emptyLayoutTryAgainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/emptyLayoutErrorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/emptyLayoutTryAgainButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_retry" />
+    </LinearLayout>
+
+</merge>

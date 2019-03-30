@@ -1,7 +1,8 @@
 package com.example.manciu.marketapp.utils.callback
 
+import android.view.View
 import com.example.manciu.marketapp.data.persistence.ProductEntity
 
 interface ItemClickCallback {
-    fun onClick(product: ProductEntity)
+    fun onClick(product: ProductEntity, productView: View)
 }

@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
-import com.example.manciu.marketapp.utils.callback.ItemClickCallback
+import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_clerk.*
+import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
+
 
 class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelProvider>() {
 
@@ -19,17 +22,16 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
 
     private lateinit var productsAdapter: ClerkListAdapter
 
-    private val deleteClickCallback = object : ItemClickCallback {
-        override fun onClick(product: ProductEntity) {
+    private val deleteClickCallback = object : ItemPositionClickCallback {
+        override fun onClick(product: ProductEntity, position: Int) {
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                deleteProduct(product)
+                deleteProduct(product, position)
             }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_list_clerk, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_list_clerk, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,44 +42,66 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
             }
         }
 
-        viewModel.clerkListLiveData.observe(this, Observer {
-            hideLoadingIndicator()
-
-            productsAdapter.setProductList(it)
+        listClerkEmptyLayout.setRetryClickListener(View.OnClickListener {
+            getProductsRemote()
         })
 
+        viewModel.clerkListLiveData.observeNonNull(this) {
+            when(it) {
+                is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
+                is Outcome.Success -> {
+                    productsAdapter.setProductList(it.data)
+                    hideLoading()
+                }
+                is Outcome.Failure -> showError(it.error.localizedMessage)
+            }
+        }
+
         setupRecyclerView()
+
+        getProductsRemote()
     }
 
     private fun setupRecyclerView() {
         productsAdapter = ClerkListAdapter(deleteClickCallback)
 
         productRecyclerView.adapter = productsAdapter
-        productRecyclerView.layoutManager = LinearLayoutManager(context)
+        productRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        getProductsRemote()
+        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation_from_bottom)
+        productRecyclerView.layoutAnimation = animation
     }
 
     private fun getProductsRemote() {
-        showLoadingIndicator()
+        showLoading()
 
         viewModel.getAllProductsRemote()
     }
 
-    private fun deleteProduct(product: ProductEntity) {
-        viewModel.deleteProductRemote(product, ::getProductsRemote)
+    private fun deleteProduct(product: ProductEntity, position: Int) {
+        val deleteProductCallback: () -> Unit = {
+            productsAdapter.deleteProductAndNotify(position)
+        }
+
+        viewModel.deleteProductRemote(product, deleteProductCallback)
     }
 
-    private fun showLoadingIndicator() {
+    private fun showLoading() {
         addButton.hide()
         productRecyclerView.visibility = View.GONE
-        loadingProgressBar.visibility = View.VISIBLE
+        listClerkEmptyLayout.showLoading()
     }
 
-    private fun hideLoadingIndicator() {
+    private fun hideLoading() {
         addButton.show()
         productRecyclerView.visibility = View.VISIBLE
-        loadingProgressBar.visibility = View.GONE
+        listClerkEmptyLayout.hide()
+    }
+
+    private fun showError(message: String?) {
+        addButton.hide()
+        productRecyclerView.visibility = View.GONE
+        listClerkEmptyLayout.showError(message)
     }
 
 }
