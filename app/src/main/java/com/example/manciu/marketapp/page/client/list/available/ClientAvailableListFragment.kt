@@ -74,14 +74,23 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
                 is Outcome.Success -> {
                     productsAdapter.setProductList(it.data)
                     hideLoading()
+                    productRecyclerView.startLayoutAnimation()
+                    clientListSwipeRefreshLayout.isRefreshing = false
                 }
-                is Outcome.Failure -> showError(it.error.localizedMessage)
+                is Outcome.Failure -> {
+                    showError(it.error.localizedMessage)
+                    clientListSwipeRefreshLayout.isRefreshing = false
+                }
             }
         }
 
         clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
             viewModel.getAvailableProductsRemote()
         })
+
+        clientListSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.getAvailableProductsRemote()
+        }
 
         setupRecyclerViewAndWebSocket()
         viewModel.getAvailableProductsRemote()
@@ -119,13 +128,13 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
             }
         })
 
-//        productsAdapter.setHasStableIds(true)
-        productRecyclerView.adapter = productsAdapter
+        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
 
-        productRecyclerView.layoutManager = GridLayoutManager(context, 2)
-
-        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation_from_bottom)
-        productRecyclerView.layoutAnimation = animation
+        productRecyclerView.run {
+            adapter = productsAdapter
+            layoutManager = GridLayoutManager(context, 2)
+            layoutAnimation = animation
+        }
     }
 
     override fun buyProduct(product: ProductEntity, quantity: Int, position: Int) {

@@ -33,14 +33,22 @@ class ClientBoughtListFragment :
                 is Outcome.Success -> {
                     productsAdapter.setProductList(it.data)
                     hideLoading()
+                    clientListSwipeRefreshLayout.isRefreshing = false
                 }
-                is Outcome.Failure -> showError(it.error.localizedMessage)
+                is Outcome.Failure -> {
+                    showError(it.error.localizedMessage)
+                    clientListSwipeRefreshLayout.isRefreshing = false
+                }
             }
         }
 
         clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
             viewModel.getBoughtProductsLocal()
         })
+
+        clientListSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.getBoughtProductsLocal()
+        }
 
         setupRecyclerView()
         viewModel.getBoughtProductsLocal()
@@ -57,8 +65,10 @@ class ClientBoughtListFragment :
     private fun setupRecyclerView() {
         productsAdapter = ClientBoughtListAdapter()
 
-        productRecyclerView.adapter = productsAdapter
-        productRecyclerView.layoutManager = LinearLayoutManager(context)
+        productRecyclerView.run {
+            adapter = productsAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun showLoading() {
