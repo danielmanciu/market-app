@@ -25,6 +25,7 @@ import com.example.manciu.marketapp.utils.showShortToast
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_list_client.*
 import kotlinx.android.synthetic.main.item_product_client.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
@@ -73,8 +74,13 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
                 is Outcome.Success -> {
                     productsAdapter.setProductList(it.data)
                     hideLoading()
+                    productRecyclerView.startLayoutAnimation()
+                    clientListSwipeRefreshLayout.isRefreshing = false
                 }
-                is Outcome.Failure -> showError(it.error.localizedMessage)
+                is Outcome.Failure -> {
+                    showError(it.error.localizedMessage)
+                    clientListSwipeRefreshLayout.isRefreshing = false
+                }
             }
         }
 
@@ -82,8 +88,20 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
             viewModel.getAvailableProductsRemote()
         })
 
+        clientListSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.getAvailableProductsRemote()
+        }
+
         setupRecyclerViewAndWebSocket()
         viewModel.getAvailableProductsRemote()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.run {
+            backButton.setOnClickListener { onBackPressed() }
+        }
     }
 
     override fun onDestroy() {
@@ -110,13 +128,13 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
             }
         })
 
-//        productsAdapter.setHasStableIds(true)
-        productRecyclerView.adapter = productsAdapter
+        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
 
-        productRecyclerView.layoutManager = GridLayoutManager(context, 2)
-
-        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation_from_bottom)
-        productRecyclerView.layoutAnimation = animation
+        productRecyclerView.run {
+            adapter = productsAdapter
+            layoutManager = GridLayoutManager(context, 2)
+            layoutAnimation = animation
+        }
     }
 
     override fun buyProduct(product: ProductEntity, quantity: Int, position: Int) {

@@ -47,8 +47,8 @@ class EnterSharedElementCallback(context: Context) : SharedElementCallback() {
                     val textView = sharedElements[i] as TextView
 
                     // get old text view width/height
-                    val oldWidth: Int = textView.measuredWidth
-                    val oldHeight: Int = textView.measuredHeight
+//                    val oldWidth: Int = textView.measuredWidth
+//                    val oldHeight: Int = textView.measuredHeight
 
                     // set end text size
                     textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
@@ -62,8 +62,8 @@ class EnterSharedElementCallback(context: Context) : SharedElementCallback() {
 //                    textView.measure(widthSpec, heightSpec)
 
                     // get new text view width/height
-                    val newWidth: Int = textView.measuredWidth
-                    val newHeight: Int = textView.measuredHeight
+//                    val newWidth: Int = textView.measuredWidth
+//                    val newHeight: Int = textView.measuredHeight
 
                     // layout the TextView in the center of its container, accounting for its new width/height.
 //                    val widthDiff: Int = newWidth - oldWidth

@@ -17,7 +17,7 @@
             android:id="@+id/detailsClickableArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_gray"
+            android:background="@drawable/ripple_grey_rectangle"
             android:paddingBottom="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +95,7 @@
             android:id="@+id/deleteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_accent"
+            android:background="@drawable/ripple_accent_rectangle"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"

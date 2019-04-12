@@ -8,8 +8,12 @@ import androidx.transition.TransitionInflater
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.persistence.ProductEntity
-import com.example.manciu.marketapp.utils.*
+import com.example.manciu.marketapp.utils.EnterSharedElementCallback
+import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.PRODUCT
+import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_details.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>() {
 
@@ -28,7 +32,7 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_details, container, false)
+            inflater.inflate(R.layout.fragment_details, container, false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,14 +77,20 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity!!.backButton.setOnClickListener { navController.navigateUp() }
+    }
+
     private fun populateTextViews() =
-        product?.run {
-            nameTextView.text = name
-            descriptionTextView.text = description
-            quantityTextView.text = "$quantity"
-            priceTextView.text = "$$price"
-            statusTextView.text = status
-        }
+            product?.run {
+                nameTextView.text = name
+                descriptionTextView.text = description
+                quantityTextView.text = "$quantity"
+                priceTextView.text = "$$price"
+                statusTextView.text = status
+            }
 
     private fun showLoading() {
         rootCardView.visibility = View.GONE

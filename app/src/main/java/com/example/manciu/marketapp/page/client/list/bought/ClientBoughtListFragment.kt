@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_client.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ClientBoughtListFragment :
         BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
@@ -33,8 +33,12 @@ class ClientBoughtListFragment :
                 is Outcome.Success -> {
                     productsAdapter.setProductList(it.data)
                     hideLoading()
+                    clientListSwipeRefreshLayout.isRefreshing = false
                 }
-                is Outcome.Failure -> showError(it.error.localizedMessage)
+                is Outcome.Failure -> {
+                    showError(it.error.localizedMessage)
+                    clientListSwipeRefreshLayout.isRefreshing = false
+                }
             }
         }
 
@@ -42,15 +46,29 @@ class ClientBoughtListFragment :
             viewModel.getBoughtProductsLocal()
         })
 
+        clientListSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.getBoughtProductsLocal()
+        }
+
         setupRecyclerView()
         viewModel.getBoughtProductsLocal()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.run {
+            backButton.setOnClickListener { onBackPressed() }
+        }
     }
 
     private fun setupRecyclerView() {
         productsAdapter = ClientBoughtListAdapter()
 
-        productRecyclerView.adapter = productsAdapter
-        productRecyclerView.layoutManager = LinearLayoutManager(context)
+        productRecyclerView.run {
+            adapter = productsAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun showLoading() {
