@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.data.persistence
+package com.example.manciu.marketapp.data.local.persistence
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

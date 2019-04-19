@@ -1,17 +1,14 @@
 package com.example.manciu.marketapp.page.clerk.list
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.example.manciu.marketapp.base.BaseViewModel
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.data.remote.ProductRemoteEntity
 import com.example.manciu.marketapp.data.remote.RemoteService
 import com.example.manciu.marketapp.utils.Outcome
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DefaultObserver
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscriber
 import timber.log.Timber
 import java.util.stream.Collectors
 

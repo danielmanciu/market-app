@@ -2,7 +2,7 @@ package com.example.manciu.marketapp.page.client.details
 
 import androidx.lifecycle.MutableLiveData
 import com.example.manciu.marketapp.base.BaseViewModel
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.data.remote.RemoteService
 import com.example.manciu.marketapp.utils.Outcome
 import io.reactivex.android.schedulers.AndroidSchedulers

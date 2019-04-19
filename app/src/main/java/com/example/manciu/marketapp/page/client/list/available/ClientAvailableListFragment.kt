@@ -11,7 +11,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.data.remote.ApiConstants.WEB_SOCKET_URL
 import com.example.manciu.marketapp.data.remote.ProductRemoteEntity
 import com.example.manciu.marketapp.page.dialog.BuyDialogFragment

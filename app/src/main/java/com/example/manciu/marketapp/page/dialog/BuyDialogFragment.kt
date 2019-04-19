@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.example.manciu.marketapp.R
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.callback.BuyDialogListener
 import kotlinx.android.synthetic.main.dialog_buy.*
 import java.lang.Integer.parseInt

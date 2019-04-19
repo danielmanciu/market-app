@@ -1,8 +1,7 @@
 package com.example.manciu.marketapp
 
-import android.content.SharedPreferences
+import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
 import com.example.manciu.marketapp.di.DaggerAppComponent
-import com.example.manciu.marketapp.utils.DARK_MODE
 import com.example.manciu.marketapp.utils.DarkModeUtils.enableDarkMode
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -15,13 +14,13 @@ class MarketApplication : DaggerApplication() {
     lateinit var timber: Timber.Tree
 
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var themePreferences: ThemePreferences
 
     override fun onCreate() {
         super.onCreate()
         Timber.plant(timber)
 
-        if (sharedPreferences.getBoolean(DARK_MODE, false))
+        if (themePreferences.get())
             enableDarkMode()
     }
 

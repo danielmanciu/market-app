@@ -1,8 +1,8 @@
-package com.example.manciu.marketapp.data.persistence
+package com.example.manciu.marketapp.data.local.persistence
 
 import android.content.Context
 import androidx.room.Room
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.DATABASE_NAME
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.DATABASE_NAME
 import com.example.manciu.marketapp.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides

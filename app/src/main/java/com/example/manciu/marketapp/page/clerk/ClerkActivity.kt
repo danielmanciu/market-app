@@ -1,9 +1,8 @@
 package com.example.manciu.marketapp.page.clerk
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import com.example.manciu.marketapp.R
-import com.example.manciu.marketapp.utils.DARK_MODE
+import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
 import com.example.manciu.marketapp.utils.DarkModeUtils.changeMode
 import com.example.manciu.marketapp.utils.DarkModeUtils.isDarkModeEnabled
 import com.example.manciu.marketapp.utils.recreateActivity
@@ -14,7 +13,7 @@ import javax.inject.Inject
 class ClerkActivity : DaggerAppCompatActivity() {
 
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var themePreferences: ThemePreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val isDarkMode = isDarkModeEnabled()
@@ -29,7 +28,7 @@ class ClerkActivity : DaggerAppCompatActivity() {
         darkModeButton.setOnClickListener {
             changeMode()
             recreateActivity(this)
-            sharedPreferences.edit().putBoolean(DARK_MODE, !isDarkMode).apply()
+            themePreferences.set(!isDarkMode)
         }
     }
 }

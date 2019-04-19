@@ -2,8 +2,8 @@ package com.example.manciu.marketapp.page.client.list.bought
 
 import androidx.lifecycle.MutableLiveData
 import com.example.manciu.marketapp.base.BaseViewModel
-import com.example.manciu.marketapp.data.persistence.ProductEntity
-import com.example.manciu.marketapp.data.persistence.ProductRepository
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductRepository
 import com.example.manciu.marketapp.utils.Outcome
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

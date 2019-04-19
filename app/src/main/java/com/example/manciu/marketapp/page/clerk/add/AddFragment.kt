@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.observeNonNull
 import com.example.manciu.marketapp.utils.showShortToast

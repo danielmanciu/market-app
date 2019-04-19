@@ -1,6 +1,6 @@
 package com.example.manciu.marketapp.data.remote
 
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.data.remote.ApiConstants.ProductRemoteEntity.SERIALIZED_NAME_DESCRIPTION
 import com.example.manciu.marketapp.data.remote.ApiConstants.ProductRemoteEntity.SERIALIZED_NAME_ID
 import com.example.manciu.marketapp.data.remote.ApiConstants.ProductRemoteEntity.SERIALIZED_NAME_NAME

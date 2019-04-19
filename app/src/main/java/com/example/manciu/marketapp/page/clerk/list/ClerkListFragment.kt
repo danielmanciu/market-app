@@ -9,13 +9,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
 import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_clerk.*
 import kotlinx.android.synthetic.main.fragment_list_clerk.productRecyclerView
-import kotlinx.android.synthetic.main.fragment_list_client.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 

@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
 const val PRODUCT = "product"
-const val DARK_MODE = "dark_mode"
 
 fun showShortToast(context: FragmentActivity?, message: String) =
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

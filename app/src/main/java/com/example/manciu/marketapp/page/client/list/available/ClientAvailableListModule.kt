@@ -1,6 +1,6 @@
 package com.example.manciu.marketapp.page.client.list.available
 
-import com.example.manciu.marketapp.data.persistence.ProductRepository
+import com.example.manciu.marketapp.data.local.persistence.ProductRepository
 import com.example.manciu.marketapp.data.remote.RemoteService
 import com.example.manciu.marketapp.di.scope.FragmentScope
 import dagger.Module

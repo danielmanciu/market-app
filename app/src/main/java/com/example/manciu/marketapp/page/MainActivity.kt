@@ -6,15 +6,28 @@ import android.util.TypedValue
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manciu.marketapp.R
+import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
 import com.example.manciu.marketapp.page.clerk.ClerkActivity
 import com.example.manciu.marketapp.page.client.ClientActivity
+import com.example.manciu.marketapp.utils.DarkModeUtils
 import com.example.manciu.marketapp.utils.DarkModeUtils.isDarkModeEnabled
+import com.example.manciu.marketapp.utils.recreateActivity
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.darkModeButton
+import kotlinx.android.synthetic.main.activity_main.logoImage
+import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
+
+    @Inject
+    lateinit var themePreferences: ThemePreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (isDarkModeEnabled()) {
+        val isDarkMode = isDarkModeEnabled()
+
+        if (isDarkMode) {
             setTheme(R.style.AppThemeDark)
         }
 
@@ -39,6 +52,12 @@ class MainActivity : AppCompatActivity() {
         clientButton.setOnClickListener {
             val intent = Intent(this, ClientActivity::class.java)
             startActivity(intent)
+        }
+
+        darkModeButton.setOnClickListener {
+            DarkModeUtils.changeMode()
+            recreate()
+            themePreferences.set(!isDarkMode)
         }
     }
 

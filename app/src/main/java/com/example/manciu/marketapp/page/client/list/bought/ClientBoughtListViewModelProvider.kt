@@ -2,7 +2,7 @@ package com.example.manciu.marketapp.page.client.list.bought
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.manciu.marketapp.data.persistence.ProductRepository
+import com.example.manciu.marketapp.data.local.persistence.ProductRepository
 
 class ClientBoughtListViewModelProvider(private val repository: ProductRepository) : ViewModelProvider.Factory {
 
