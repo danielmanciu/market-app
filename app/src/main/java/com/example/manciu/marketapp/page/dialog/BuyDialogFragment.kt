@@ -55,7 +55,7 @@ class BuyDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        confirmBuyButton.setOnClickListener {
+        dialogBuyButton.setOnClickListener {
             if (!quantityEditText.text.isNullOrBlank()) {
                 val newQuantity = parseInt(quantityEditText.text.toString())
 

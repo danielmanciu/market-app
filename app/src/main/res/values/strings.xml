@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Market App</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
 
     <!-- Start Screen -->
     <string name="startScreenMessage">What would you like to enter as?</string>
