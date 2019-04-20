@@ -18,5 +18,4 @@ object DarkModeUtils {
 
         AppCompatDelegate.setDefaultNightMode(mode)
     }
-
 }

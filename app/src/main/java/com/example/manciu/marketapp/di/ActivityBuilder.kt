@@ -23,5 +23,4 @@ abstract class ActivityBuilder {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun provideMainActivity(): MainActivity
-
 }

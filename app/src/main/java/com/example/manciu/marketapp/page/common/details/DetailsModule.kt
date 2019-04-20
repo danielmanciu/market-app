@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.page.client.details
+package com.example.manciu.marketapp.page.common.details
 
 import com.example.manciu.marketapp.data.remote.RemoteService
 import com.example.manciu.marketapp.di.scope.FragmentScope

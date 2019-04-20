@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,13 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.example.manciu.marketapp.utils.GridRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/productRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_product_client" />
-
+        <com.example.manciu.marketapp.utils.GridRecyclerView
+            android:id="@+id/productRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_product_client" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.example.manciu.marketapp.utils.EmptyLayout
@@ -24,5 +21,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
-
 </FrameLayout>

@@ -13,5 +13,4 @@ class ClientAvailableListViewModelProvider(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             ClientAvailableListViewModel(service, repository) as T
-
 }

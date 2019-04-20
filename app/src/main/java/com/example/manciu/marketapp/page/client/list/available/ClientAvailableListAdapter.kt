@@ -85,13 +85,11 @@ class ClientAvailableListAdapter(
                 detailsClickableArea.setOnClickListener {
                     showDetailsClickCallback.onClick(product, itemView)
                 }
+
                 buyButton.setOnClickListener {
                     buyClickCallback.onClick(product, position)
                 }
             }
-
         }
-
     }
-
 }

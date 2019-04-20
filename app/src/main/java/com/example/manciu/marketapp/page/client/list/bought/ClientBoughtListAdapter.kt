@@ -42,7 +42,5 @@ class ClientBoughtListAdapter :
                 productPriceTextView.text = "$${product.price}"
             }
         }
-
     }
-
 }

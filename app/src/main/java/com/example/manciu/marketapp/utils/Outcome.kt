@@ -11,5 +11,4 @@ sealed class Outcome<T> {
         fun <T> success(data: T): Outcome<T> = Success(data)
         fun <T> failure(error: Throwable): Outcome<T> = Failure(error)
     }
-
 }

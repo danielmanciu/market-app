@@ -12,5 +12,4 @@ object PersistenceConstants {
         const val COLUMN_INFO_PRICE = "price"
         const val COLUMN_INFO_STATUS = "status"
     }
-
 }

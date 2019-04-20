@@ -29,5 +29,4 @@ interface RemoteService {
 
     @POST(BUY_PRODUCT)
     fun buyProduct(@Body product: ProductRemoteEntity): Observable<Response<ProductRemoteEntity>>
-
 }

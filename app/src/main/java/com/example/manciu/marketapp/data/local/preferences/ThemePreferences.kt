@@ -10,5 +10,4 @@ class ThemePreferences(private val preferences: SharedPreferences) {
 
     fun get() =
             preferences.getBoolean(DARK_MODE, false)
-
 }

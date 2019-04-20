@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootCardView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -87,9 +86,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/priceIcon"
                     app:layout_constraintTop_toTopOf="@id/priceIcon" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </FrameLayout>
 
         <FrameLayout
@@ -107,15 +104,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:gravity="center"
-                android:src="@drawable/ic_delete"
                 android:text="@string/buy"
                 android:textAllCaps="true"
                 android:tint="@color/black"
                 tools:ignore="ContentDescription" />
-
         </FrameLayout>
-
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>
 

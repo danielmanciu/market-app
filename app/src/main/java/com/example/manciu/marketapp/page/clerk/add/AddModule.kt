@@ -14,5 +14,4 @@ class AddModule {
     @FragmentScope
     internal fun provideViewModelProvider(service: RemoteService) =
             AddViewModelProvider(service)
-
 }

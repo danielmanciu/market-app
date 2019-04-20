@@ -31,5 +31,4 @@ class MarketApplication : DaggerApplication() {
                     .also {
                         it.inject(this)
                     }
-
 }

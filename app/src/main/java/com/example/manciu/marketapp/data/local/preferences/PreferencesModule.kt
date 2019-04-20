@@ -20,5 +20,4 @@ class PreferencesModule {
     @ApplicationScope
     fun provideThemePreference(sharedPreferences: SharedPreferences) =
             ThemePreferences(sharedPreferences)
-
 }

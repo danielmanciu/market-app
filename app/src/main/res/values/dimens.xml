@@ -1,4 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Floating Action Button -->
+    <dimen name="floating_action_button_size">56dp</dimen>
+    <dimen name="floating_action_button_image_size">34dp</dimen>
+    <dimen name="floating_action_button_margin">20dp</dimen>
+    <dimen name="floating_action_button_elevation">3dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_icons_size">48dp</dimen>
+    <dimen name="toolbar_logo_size">42dp</dimen>
 
     <!-- Details -->
     <dimen name="details_small_text_size">17sp</dimen>

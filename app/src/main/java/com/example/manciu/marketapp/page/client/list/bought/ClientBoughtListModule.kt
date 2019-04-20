@@ -12,5 +12,4 @@ class ClientBoughtListModule {
     @FragmentScope
     internal fun provideViewModelProvider(repository: ProductRepository) =
             ClientBoughtListViewModelProvider(repository)
-
 }

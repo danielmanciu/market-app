@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Market App</string>
     <string name="light">Light</string>
@@ -30,5 +31,4 @@
     <!-- Clerk List -->
     <string name="price_tag">$%d</string>
     <string name="delete">Delete</string>
-
 </resources>

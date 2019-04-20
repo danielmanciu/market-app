@@ -1,6 +1,8 @@
 package com.example.manciu.marketapp.page.client
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.animation.AnimationUtils
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
 import com.example.manciu.marketapp.utils.DarkModeUtils.changeMode
@@ -31,5 +33,4 @@ class ClientActivity : DaggerAppCompatActivity() {
             themePreferences.set(!isDarkMode)
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.page.client.details
+package com.example.manciu.marketapp.page.common.details
 
 import androidx.lifecycle.MutableLiveData
 import com.example.manciu.marketapp.base.BaseViewModel

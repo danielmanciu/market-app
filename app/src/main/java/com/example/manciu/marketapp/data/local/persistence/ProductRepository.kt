@@ -9,5 +9,4 @@ class ProductRepository(private val productDatabase: ProductDatabase) {
 
     fun insertProduct(product: ProductEntity) =
             productDatabase.dao().insertProduct(product)
-
 }

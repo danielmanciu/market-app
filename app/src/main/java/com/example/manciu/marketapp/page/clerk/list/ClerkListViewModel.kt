@@ -52,5 +52,4 @@ class ClerkListViewModel(private val service: RemoteService) : BaseViewModel() {
 
         addDisposable(d)
     }
-
 }

@@ -14,5 +14,4 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProduct(product: ProductEntity)
-
 }

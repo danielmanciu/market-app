@@ -44,12 +44,11 @@ class GridRecyclerView : RecyclerView {
 
                 // Calculate the column/row position in the grid
                 val invertedIndex = count - 1 - index
-                this.column = columns - 1 - (invertedIndex % columns);
-                this.row = this.rowsCount - 1 - invertedIndex / columns;
+                this.column = columns - 1 - (invertedIndex % columns)
+                this.row = this.rowsCount - 1 - invertedIndex / columns
             }
         } else {
             super.attachLayoutAnimationParameters(child, params, index, count)
         }
     }
-
 }

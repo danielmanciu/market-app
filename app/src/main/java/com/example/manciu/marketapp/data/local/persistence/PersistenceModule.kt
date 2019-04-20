@@ -19,5 +19,4 @@ class PersistenceModule {
     @ApplicationScope
     fun provideRepository(database: ProductDatabase): ProductRepository =
             ProductRepository(database)
-
 }

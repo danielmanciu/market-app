@@ -128,12 +128,10 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
             }
         })
 
-        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
-
         productRecyclerView.run {
             adapter = productsAdapter
             layoutManager = GridLayoutManager(context, 2)
-            layoutAnimation = animation
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
         }
     }
 
@@ -191,5 +189,4 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     }
 
     private fun showError(message: String?) = clientListEmptyLayout.showError(message)
-
 }

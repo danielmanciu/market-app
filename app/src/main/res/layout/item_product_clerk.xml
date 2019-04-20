@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootCardView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -88,7 +88,6 @@
                     app:layout_constraintTop_toTopOf="@id/priceIcon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </FrameLayout>
 
         <FrameLayout
@@ -101,28 +100,16 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/productPriceTextView">
 
-            <!--<ImageView-->
-            <!--android:id="@+id/deleteIcon"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:src="@drawable/ic_delete"-->
-            <!--android:tint="@color/black"-->
-            <!--tools:ignore="ContentDescription" />-->
-
             <TextView
                 android:id="@+id/deleteButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:gravity="center"
-                android:src="@drawable/ic_delete"
                 android:text="@string/delete"
                 android:textAllCaps="true"
                 android:tint="@color/black"
                 tools:ignore="ContentDescription" />
-
         </FrameLayout>
-
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>
 

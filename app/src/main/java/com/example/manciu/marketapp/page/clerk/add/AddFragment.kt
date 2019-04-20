@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.local.persistence.ProductEntity
@@ -35,7 +36,20 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        activity!!.backButton.setOnClickListener { navController.navigateUp() }
+        activity!!.run {
+            backButton.setOnClickListener { navController.navigateUp() }
+            darkModeButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out))
+            darkModeButton.visibility = View.INVISIBLE
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        activity!!.run {
+            darkModeButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in))
+            darkModeButton.visibility = View.VISIBLE
+        }
     }
 
     private fun getProductFromInputs() = ProductEntity(
@@ -82,5 +96,4 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
                     || quantityEditText.text.isNullOrBlank()
                     || priceEditText.text.isNullOrBlank()
                     || statusEditText.text.isNullOrBlank()
-
 }

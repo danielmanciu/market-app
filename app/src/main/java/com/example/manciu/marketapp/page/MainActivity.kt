@@ -74,6 +74,5 @@ class MainActivity : DaggerAppCompatActivity() {
         if (outValue.string != themeName) {
             recreate()
         }
-
     }
 }
