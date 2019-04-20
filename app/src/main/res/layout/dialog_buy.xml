@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -18,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/quantityInput"
@@ -39,29 +37,24 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <FrameLayout
-        android:id="@+id/confirmBuyButton"
+        android:id="@+id/dialogBuyButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/confirm_buy_button_height"
         android:background="@drawable/ripple_accent_rectangle"
         android:clickable="true"
         android:focusable="true"
         android:layout_marginTop="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/quantityInput">
+        app:layout_constraintTop_toBottomOf="@id/quantityInput" />
 
-        <TextView
-            android:id="@+id/buyButtonTextView"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center"
-            android:src="@drawable/ic_delete"
-            android:text="@string/buy"
-            android:textAllCaps="true"
-            android:tint="@color/black"
-            tools:ignore="ContentDescription" />
-
-    </FrameLayout>
-
+    <TextView
+        android:id="@+id/dialogBuyButtonTextView"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="@string/buy"
+        android:textAllCaps="true"
+        tools:ignore="ContentDescription"
+        app:layout_constraintTop_toTopOf="@id/dialogBuyButton"
+        app:layout_constraintBottom_toBottomOf="@id/dialogBuyButton"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

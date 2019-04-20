@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_client"
@@ -12,30 +11,23 @@
 
         <action
             android:id="@+id/action_viewPagerFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment"
-            app:exitAnim="@anim/fade_out"/>
-
+            app:destination="@id/detailsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.manciu.marketapp.page.client.details.DetailsFragment"
+        android:name="com.example.manciu.marketapp.page.common.details.DetailsFragment"
         android:label="DetailsFragment">
 
         <action
             android:id="@+id/action_detailsFragment_pop"
-            app:enterAnim="@anim/fragment_enter_transition"
-            app:exitAnim="@anim/fragment_exit_transition"
-            app:launchSingleTop="true"
-            app:popEnterAnim="@anim/fragment_pop_enter_transition"
-            app:popExitAnim="@anim/fragment_pop_exit_transition"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/fade_out"
             app:popUpTo="@id/viewPagerFragment" />
-
     </fragment>
 
     <fragment
         android:id="@+id/boughtListFragmentClient"
         android:name="com.example.manciu.marketapp.page.client.list.bought.ClientBoughtListFragment"
         android:label="ClientBoughtListFragment" />
-
 </navigation>

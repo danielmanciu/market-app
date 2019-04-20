@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,7 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/rootCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,7 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/details_spacing_size"
@@ -36,7 +35,7 @@
                             android:id="@+id/nameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/details_title_text_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +46,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/details_spacing_size"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/details_large_text_size"
                             app:layout_constraintEnd_toStartOf="@id/priceTextView"
                             app:layout_constraintHorizontal_chainStyle="spread"
@@ -59,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/details_spacing_size"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/details_large_text_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_chainStyle="spread"
@@ -72,7 +71,7 @@
                             android:layout_height="18dp"
                             android:layout_marginEnd="5dp"
                             android:src="@drawable/ic_quantity"
-                            android:tint="@color/colorAccent"
+                            android:tint="?attr/colorAccent"
                             app:layout_constraintBottom_toBottomOf="@id/quantityLabel"
                             app:layout_constraintEnd_toStartOf="@id/quantityLabel"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -84,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/quantity"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?attr/colorAccent"
                             android:textSize="@dimen/details_small_text_size"
                             app:layout_constraintEnd_toEndOf="@id/quantityTextView"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -97,7 +96,7 @@
                             android:layout_height="18dp"
                             android:layout_marginEnd="5dp"
                             android:src="@drawable/ic_price_tag"
-                            android:tint="@color/colorAccent"
+                            android:tint="?attr/colorAccent"
                             app:layout_constraintBottom_toBottomOf="@id/priceLabel"
                             app:layout_constraintEnd_toStartOf="@id/priceLabel"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -109,7 +108,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/price"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?attr/colorAccent"
                             android:textSize="@dimen/details_small_text_size"
                             app:layout_constraintEnd_toEndOf="@id/priceTextView"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -121,7 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="40dp"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/details_description_text_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -133,12 +132,12 @@
                             android:layout_height="15dp"
                             android:layout_marginEnd="5dp"
                             android:src="@drawable/ic_description"
-                            android:tint="@color/colorAccent"
+                            android:tint="?attr/colorAccent"
                             app:layout_constraintBottom_toBottomOf="@id/descriptionLabel"
                             app:layout_constraintEnd_toStartOf="@id/descriptionLabel"
                             app:layout_constraintHorizontal_chainStyle="packed"
-                            app:layout_constraintTop_toTopOf="@id/descriptionLabel"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/descriptionLabel"
                             tools:ignore="ContentDescription" />
 
                         <TextView
@@ -147,7 +146,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:text="@string/description"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?attr/colorAccent"
                             android:textSize="@dimen/details_small_text_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/descriptionIcon"
@@ -158,7 +157,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="40dp"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/details_status_text_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +169,7 @@
                             android:layout_height="18dp"
                             android:layout_marginEnd="5dp"
                             android:src="@drawable/ic_status"
-                            android:tint="@color/colorAccent"
+                            android:tint="?attr/colorAccent"
                             app:layout_constraintBottom_toBottomOf="@id/statusLabel"
                             app:layout_constraintEnd_toStartOf="@id/statusLabel"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -183,16 +182,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:text="@string/status"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="?attr/colorAccent"
                             android:textSize="@dimen/details_small_text_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/statusIcon"
                             app:layout_constraintTop_toBottomOf="@id/statusTextView" />
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </ScrollView>
-
             </com.google.android.material.card.MaterialCardView>
 
             <com.example.manciu.marketapp.utils.EmptyLayout
@@ -200,9 +196,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone" />
-
         </LinearLayout>
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </FrameLayout>

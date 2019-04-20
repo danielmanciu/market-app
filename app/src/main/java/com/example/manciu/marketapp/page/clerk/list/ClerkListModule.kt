@@ -12,5 +12,4 @@ class ClerkListModule {
     @FragmentScope
     internal fun provideViewModelProvider(service: RemoteService) =
             ClerkListViewModelProvider(service)
-
 }

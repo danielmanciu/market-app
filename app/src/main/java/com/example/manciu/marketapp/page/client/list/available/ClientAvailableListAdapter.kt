@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manciu.marketapp.R
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.callback.ItemClickCallback
 import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
 import kotlinx.android.synthetic.main.item_product_client.view.*
@@ -85,13 +85,11 @@ class ClientAvailableListAdapter(
                 detailsClickableArea.setOnClickListener {
                     showDetailsClickCallback.onClick(product, itemView)
                 }
+
                 buyButton.setOnClickListener {
                     buyClickCallback.onClick(product, position)
                 }
             }
-
         }
-
     }
-
 }

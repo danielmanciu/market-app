@@ -78,5 +78,4 @@ class ApiModule {
     @ApplicationScope
     internal fun provideService(retrofit: Retrofit): RemoteService =
             retrofit.create(RemoteService::class.java)
-
 }

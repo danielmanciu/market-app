@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,13 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.manciu.marketapp.utils.GridRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <com.example.manciu.marketapp.utils.GridRecyclerView
             android:id="@+id/productRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_product_clerk" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.example.manciu.marketapp.utils.EmptyLayout
@@ -28,11 +25,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/floating_action_button_size"
+        android:layout_height="@dimen/floating_action_button_size"
         android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/floating_action_button_margin"
+        android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/colorPrimary" />
-
+        android:tint="?attr/colorPrimaryDark"
+        app:backgroundTint="?attr/colorPrimary"
+        app:elevation="@dimen/floating_action_button_elevation"
+        app:maxImageSize="@dimen/floating_action_button_image_size" />
 </FrameLayout>

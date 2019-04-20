@@ -21,8 +21,6 @@ class EnterSharedElementCallback(context: Context) : SharedElementCallback() {
             sharedElementSnapshots: MutableList<View>?
     ) {
         sharedElements?.run {
-            Timber.i("onSharedElementStart $sharedElementNames")
-
             // set nameStartTextTextSize only for nameTextView
             for (i in 0 until this.size) {
                 if (sharedElements[i] is TextView)
@@ -40,8 +38,6 @@ class EnterSharedElementCallback(context: Context) : SharedElementCallback() {
             sharedElementSnapshots: MutableList<View>?
     ) {
         sharedElements?.run {
-            Timber.i("onSharedElementEnd $sharedElementNames")
-
             for (i in 0 until this.size) {
                 if (sharedElements[i] is TextView) {
                     val textView = sharedElements[i] as TextView
@@ -56,6 +52,7 @@ class EnterSharedElementCallback(context: Context) : SharedElementCallback() {
                                     ?.takeIf { element -> element.contains("name") }
                                     ?.let { nameEndTextSize } ?: endTextSize)
 
+                    //FIXME
 //                    // re-measure text view since size has changed
 //                    val widthSpec: Int = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
 //                    val heightSpec: Int = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
@@ -75,6 +72,5 @@ class EnterSharedElementCallback(context: Context) : SharedElementCallback() {
                 }
             }
         }
-
     }
 }

@@ -84,5 +84,4 @@ class ClientBoughtListFragment :
     private fun showError(message: String?) {
         clientListEmptyLayout.showError(message)
     }
-
 }

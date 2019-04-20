@@ -1,15 +1,15 @@
-package com.example.manciu.marketapp.data.persistence
+package com.example.manciu.marketapp.data.local.persistence
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_DESCRIPTION
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_NAME
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_PRICE
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_QUANTITY
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_STATUS
-import com.example.manciu.marketapp.data.persistence.PersistenceConstants.ProductEntity.TABLE_NAME
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_DESCRIPTION
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_NAME
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_PRICE
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_QUANTITY
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.ProductEntity.COLUMN_INFO_STATUS
+import com.example.manciu.marketapp.data.local.persistence.PersistenceConstants.ProductEntity.TABLE_NAME
 import com.example.manciu.marketapp.data.remote.ProductRemoteEntity
 import kotlinx.android.parcel.Parcelize
 

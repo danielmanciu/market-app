@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.data.persistence
+package com.example.manciu.marketapp.data.local.persistence
 
 object PersistenceConstants {
 
@@ -12,5 +12,4 @@ object PersistenceConstants {
         const val COLUMN_INFO_PRICE = "price"
         const val COLUMN_INFO_STATUS = "status"
     }
-
 }

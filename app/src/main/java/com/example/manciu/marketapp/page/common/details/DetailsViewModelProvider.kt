@@ -1,4 +1,4 @@
-package com.example.manciu.marketapp.page.client.details
+package com.example.manciu.marketapp.page.common.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

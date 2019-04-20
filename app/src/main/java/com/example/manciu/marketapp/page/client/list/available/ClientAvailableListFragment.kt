@@ -11,7 +11,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.data.remote.ApiConstants.WEB_SOCKET_URL
 import com.example.manciu.marketapp.data.remote.ProductRemoteEntity
 import com.example.manciu.marketapp.page.dialog.BuyDialogFragment
@@ -128,12 +128,10 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
             }
         })
 
-        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
-
         productRecyclerView.run {
             adapter = productsAdapter
             layoutManager = GridLayoutManager(context, 2)
-            layoutAnimation = animation
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
         }
     }
 
@@ -191,5 +189,4 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     }
 
     private fun showError(message: String?) = clientListEmptyLayout.showError(message)
-
 }

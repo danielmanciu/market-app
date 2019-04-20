@@ -1,23 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Light application theme. -->
+    <style name="AppThemeLight" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryLightTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLightTheme</item>
+        <item name="colorAccent">@color/colorAccentLightTheme</item>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="themeName">@string/light</item>
 
-        <item name="actionBarStyle">@style/NoShadowToolbar</item>
+        <item name="darkModeIconPlaceholder">@drawable/ic_dark_mode_off</item>
+
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-
-        <item name="android:windowActivityTransitions">true</item>
-        <!--<item name="android:windowSharedElementEnterTransition">@android:transition/move</item>-->
-        <!--<item name="android:windowSharedElementExitTransition">@android:transition/move</item>-->
     </style>
 
-    <style name="NoShadowToolbar" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="elevation">0dp</item>
-    </style>
+    <!-- Dark application theme. -->
+    <style name="AppThemeDark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDarkTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDarkTheme</item>
+        <item name="colorAccent">@color/colorAccentDarkTheme</item>
 
+        <item name="themeName">@string/dark</item>
+
+        <item name="darkModeIconPlaceholder">@drawable/ic_dark_mode_on</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>

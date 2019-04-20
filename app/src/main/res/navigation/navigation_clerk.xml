@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_clerk"
@@ -12,19 +11,32 @@
 
         <action
             android:id="@+id/action_listFragmentClerk_to_addFragment"
-            app:destination="@id/action_listFragmentClerk_to_addFragment"
+            app:destination="@id/addFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:launchSingleTop="true"
-            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"
             app:popUpTo="@id/listFragmentClerk" />
 
+        <action
+            android:id="@+id/action_listFragmentClerk_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/action_listFragmentClerk_to_addFragment"
+        android:id="@+id/detailsFragment"
+        android:name="com.example.manciu.marketapp.page.common.details.DetailsFragment"
+        android:label="DetailsFragment">
+
+        <action
+            android:id="@+id/action_detailsFragment_pop"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/listFragmentClerk" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFragment"
         android:name="com.example.manciu.marketapp.page.clerk.add.AddFragment"
         android:label="AddFragment" />
-
 </navigation>

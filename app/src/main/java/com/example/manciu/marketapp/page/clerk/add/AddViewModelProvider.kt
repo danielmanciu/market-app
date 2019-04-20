@@ -8,5 +8,4 @@ class AddViewModelProvider(private val service: RemoteService) : ViewModelProvid
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = AddViewModel(service) as T
-
 }

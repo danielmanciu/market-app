@@ -5,25 +5,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
-import com.example.manciu.marketapp.data.persistence.ProductEntity
+import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.PRODUCT
+import com.example.manciu.marketapp.utils.callback.ItemClickCallback
 import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
 import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_clerk.*
-import kotlinx.android.synthetic.main.fragment_list_clerk.productRecyclerView
-import kotlinx.android.synthetic.main.fragment_list_client.*
+import kotlinx.android.synthetic.main.item_product_clerk.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-
+import timber.log.Timber
 
 class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelProvider>() {
 
     override fun getViewModelClass() = ClerkListViewModel::class.java
 
     private lateinit var productsAdapter: ClerkListAdapter
+
+    private val showProductDetailsClickCallback = object : ItemClickCallback {
+        override fun onClick(product: ProductEntity, productView: View) {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                showDetailsFragment(product, productView)
+            }
+        }
+    }
 
     private val deleteClickCallback = object : ItemPositionClickCallback {
         override fun onClick(product: ProductEntity, position: Int) {
@@ -83,16 +94,31 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
     }
 
     private fun setupRecyclerView() {
-        productsAdapter = ClerkListAdapter(deleteClickCallback)
-
-        val animation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
+        productsAdapter = ClerkListAdapter(deleteClickCallback, showProductDetailsClickCallback)
 
         productRecyclerView.run {
             adapter = productsAdapter
             layoutManager = GridLayoutManager(context, 2)
-            layoutAnimation = animation
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
         }
     }
+
+    private fun showDetailsFragment(product: ProductEntity, productView: View) {
+        val productBundle = Bundle()
+        productBundle.putParcelable(PRODUCT, product)
+
+        val extras = FragmentNavigatorExtras(
+                productView.rootCardView to ViewCompat.getTransitionName(productView.rootCardView)!!,
+                productView.productNameTextView to ViewCompat.getTransitionName(productView.productNameTextView)!!,
+                productView.quantityIcon to ViewCompat.getTransitionName(productView.quantityIcon)!!,
+                productView.productQuantityTextView to ViewCompat.getTransitionName(productView.productQuantityTextView)!!,
+                productView.priceIcon to ViewCompat.getTransitionName(productView.priceIcon)!!,
+                productView.productPriceTextView to ViewCompat.getTransitionName(productView.productPriceTextView)!!
+        )
+
+        navController.navigate(R.id.action_listFragmentClerk_to_detailsFragment, productBundle, null, extras)
+    }
+
 
     private fun deleteProduct(product: ProductEntity, position: Int) {
         val deleteProductCallback: () -> Unit = {

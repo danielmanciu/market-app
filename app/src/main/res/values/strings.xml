@@ -1,5 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Market App</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
 
     <!-- Start Screen -->
     <string name="startScreenMessage">What would you like to enter as?</string>
@@ -28,5 +31,4 @@
     <!-- Clerk List -->
     <string name="price_tag">$%d</string>
     <string name="delete">Delete</string>
-
 </resources>

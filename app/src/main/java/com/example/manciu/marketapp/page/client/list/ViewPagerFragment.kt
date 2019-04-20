@@ -21,5 +21,4 @@ class ViewPagerFragment : Fragment() {
 
         tabLayout.setupWithViewPager(viewPager)
     }
-
 }

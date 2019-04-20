@@ -37,5 +37,4 @@ class EmptyLayout @JvmOverloads constructor(
     fun setRetryClickListener(listener: View.OnClickListener) {
         emptyLayoutTryAgainButton.setOnClickListener(listener)
     }
-
 }
