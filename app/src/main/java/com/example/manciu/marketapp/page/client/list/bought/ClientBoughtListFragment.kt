@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
@@ -41,6 +42,14 @@ class ClientBoughtListFragment :
                 }
             }
         }
+
+        viewModel.boughtProductsLiveData.observe(this, Observer {
+           when(it) {
+
+           }
+        })
+
+
 
         clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
             viewModel.getBoughtProductsLocal()

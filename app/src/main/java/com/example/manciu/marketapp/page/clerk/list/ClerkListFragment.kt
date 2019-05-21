@@ -20,7 +20,6 @@ import com.example.manciu.marketapp.utils.observeNonNull
 import kotlinx.android.synthetic.main.fragment_list_clerk.*
 import kotlinx.android.synthetic.main.item_product_clerk.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import timber.log.Timber
 
 class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelProvider>() {
 
@@ -45,7 +44,7 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_list_clerk, container, false)
+        inflater.inflate(R.layout.fragment_list_clerk, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -108,12 +107,12 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
         productBundle.putParcelable(PRODUCT, product)
 
         val extras = FragmentNavigatorExtras(
-                productView.rootCardView to ViewCompat.getTransitionName(productView.rootCardView)!!,
-                productView.productNameTextView to ViewCompat.getTransitionName(productView.productNameTextView)!!,
-                productView.quantityIcon to ViewCompat.getTransitionName(productView.quantityIcon)!!,
-                productView.productQuantityTextView to ViewCompat.getTransitionName(productView.productQuantityTextView)!!,
-                productView.priceIcon to ViewCompat.getTransitionName(productView.priceIcon)!!,
-                productView.productPriceTextView to ViewCompat.getTransitionName(productView.productPriceTextView)!!
+            productView.rootCardView to ViewCompat.getTransitionName(productView.rootCardView)!!,
+            productView.productNameTextView to ViewCompat.getTransitionName(productView.productNameTextView)!!,
+            productView.quantityIcon to ViewCompat.getTransitionName(productView.quantityIcon)!!,
+            productView.productQuantityTextView to ViewCompat.getTransitionName(productView.productQuantityTextView)!!,
+            productView.priceIcon to ViewCompat.getTransitionName(productView.priceIcon)!!,
+            productView.productPriceTextView to ViewCompat.getTransitionName(productView.productPriceTextView)!!
         )
 
         navController.navigate(R.id.action_listFragmentClerk_to_detailsFragment, productBundle, null, extras)

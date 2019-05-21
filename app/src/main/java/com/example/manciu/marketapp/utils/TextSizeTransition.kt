@@ -7,11 +7,15 @@ import android.util.AttributeSet
 import android.util.Property
 import android.util.TypedValue
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.TextView
 import androidx.transition.Transition
 import androidx.transition.TransitionValues
 
-class TextSizeTransition : Transition {
+class TextSizeTransition @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : Transition(context, attrs) {
 
     companion object {
         private const val PROPNAME_TEXT_SIZE = "manciu:transition:textsize"
@@ -27,10 +31,6 @@ class TextSizeTransition : Transition {
             }
         }
     }
-
-    constructor()
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     override fun getTransitionProperties(): Array<String> {
         return TRANSITION_PROPERTIES
