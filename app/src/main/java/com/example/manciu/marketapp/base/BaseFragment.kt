@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ abstract class BaseFragment<VM : BaseViewModel, VMF : ViewModelProvider.Factory>
         super.onAttach(context)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
-        navController = NavHostFragment.findNavController(this)
+        navController = findNavController()
     }
 
     protected abstract fun getViewModelClass(): Class<VM>
