@@ -4,19 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
 import com.example.manciu.marketapp.page.clerk.ClerkActivity
 import com.example.manciu.marketapp.page.client.ClientActivity
 import com.example.manciu.marketapp.utils.DarkModeUtils
 import com.example.manciu.marketapp.utils.DarkModeUtils.isDarkModeEnabled
-import com.example.manciu.marketapp.utils.recreateActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.darkModeButton
-import kotlinx.android.synthetic.main.activity_main.logoImage
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {

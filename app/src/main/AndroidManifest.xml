@@ -7,14 +7,16 @@
 
     <application
         android:name=".MarketApplication"
-        android:allowBackup="true"
+        android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppThemeLight">
-        <activity android:name="com.example.manciu.marketapp.page.MainActivity">
+        android:theme="@style/AppThemeLight"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.example.manciu.marketapp.page.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

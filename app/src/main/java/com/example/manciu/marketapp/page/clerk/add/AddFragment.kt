@@ -14,6 +14,7 @@ import com.example.manciu.marketapp.utils.showShortToast
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 
+@Suppress("TooManyFunctions")
 class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
 
     override fun getViewModelClass() = AddViewModel::class.java
