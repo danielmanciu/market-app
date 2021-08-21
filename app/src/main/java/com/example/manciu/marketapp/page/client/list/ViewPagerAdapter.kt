@@ -14,10 +14,10 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     }
 
     override fun getItem(position: Int): Fragment =
-            if (position == 1) ClientBoughtListFragment() else ClientAvailableListFragment()
+        if (position == 1) ClientBoughtListFragment() else ClientAvailableListFragment()
 
     override fun getCount(): Int = 2
 
-    override fun getPageTitle(position: Int): CharSequence? =
-            if (position == 1) TAB_BOUGHT else TAB_AVAILABLE
+    override fun getPageTitle(position: Int): CharSequence =
+        if (position == 1) TAB_BOUGHT else TAB_AVAILABLE
 }

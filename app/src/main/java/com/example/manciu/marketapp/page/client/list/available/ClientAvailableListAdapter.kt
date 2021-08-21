@@ -11,8 +11,8 @@ import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
 import kotlinx.android.synthetic.main.item_product_client.view.*
 
 class ClientAvailableListAdapter(
-        private val buyClickCallback: ItemPositionClickCallback,
-        private val showDetailsClickCallback: ItemClickCallback
+    private val buyClickCallback: ItemPositionClickCallback,
+    private val showDetailsClickCallback: ItemClickCallback
 ) : RecyclerView.Adapter<ClientAvailableListAdapter.ProductViewHolder>() {
 
     var products: MutableList<ProductEntity>? = null
@@ -35,38 +35,40 @@ class ClientAvailableListAdapter(
     }
 
     fun changeProductAndNotify(product: ProductEntity, position: Int) =
-            if (product.quantity > 0) updateProductAndNotify(product, position)
-            else deleteProductAndNotify(position)
+        if (product.quantity > 0) updateProductAndNotify(product, position)
+        else deleteProductAndNotify(position)
 
     private fun updateProductAndNotify(product: ProductEntity, position: Int) =
-            products?.run {
-                this[position] = product
-                notifyItemChanged(position)
-            }
+        products?.run {
+            this[position] = product
+            notifyItemChanged(position)
+        }
 
     private fun deleteProductAndNotify(position: Int) =
-            products?.run {
-                this.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, this.size)
-            }
+        products?.run {
+            this.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, this.size)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_product_client, parent, false)
+            .inflate(R.layout.item_product_client, parent, false)
         return ProductViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
-            holder.bind(position, showDetailsClickCallback, buyClickCallback)
+        holder.bind(position, showDetailsClickCallback, buyClickCallback)
 
     override fun getItemCount() = products?.size ?: 0
 
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(position: Int,
-                 showDetailsClickCallback: ItemClickCallback,
-                 buyClickCallback: ItemPositionClickCallback) {
+        fun bind(
+            position: Int,
+            showDetailsClickCallback: ItemClickCallback,
+            buyClickCallback: ItemPositionClickCallback
+        ) {
             val product: ProductEntity = products!![position]
             val id: Int = product.id
 

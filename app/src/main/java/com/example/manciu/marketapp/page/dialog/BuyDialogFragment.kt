@@ -21,10 +21,11 @@ class BuyDialogFragment : DialogFragment() {
         private lateinit var product: ProductEntity
         private var position: Int = -1
 
-        fun createBuyDialogFragment(fragmentManager: FragmentManager,
-                                    listener: BuyDialogListener,
-                                    productToBuy: ProductEntity,
-                                    positionIntAdapter: Int
+        fun createBuyDialogFragment(
+            fragmentManager: FragmentManager,
+            listener: BuyDialogListener,
+            productToBuy: ProductEntity,
+            positionIntAdapter: Int
         ): BuyDialogFragment {
             buyDialogListener = listener
             product = productToBuy
@@ -47,8 +48,15 @@ class BuyDialogFragment : DialogFragment() {
         return buyDialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        buyDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        buyDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return inflater.inflate(R.layout.dialog_buy, container, false)
     }
 

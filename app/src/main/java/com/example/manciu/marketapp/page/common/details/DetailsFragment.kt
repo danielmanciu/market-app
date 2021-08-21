@@ -25,15 +25,21 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        TransitionInflater.from(activity).inflateTransition(R.transition.details_transition).run {
-            duration = activity!!.resources.getInteger(R.integer.details_transition_duration).toLong()
-            this@DetailsFragment.sharedElementEnterTransition = this
-            this@DetailsFragment.setEnterSharedElementCallback(EnterSharedElementCallback(activity!!))
-        }
+        val transition = TransitionInflater.from(activity)
+            .inflateTransition(R.transition.details_transition).apply {
+                duration =
+                    requireActivity().resources.getInteger(R.integer.details_transition_duration)
+                        .toLong()
+            }
+        sharedElementEnterTransition = transition
+        setEnterSharedElementCallback(EnterSharedElementCallback(requireActivity()))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_details, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_details, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,30 +86,30 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        activity!!.run {
-            backButton.setOnClickListener { navController.navigateUp() }
-            darkModeButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out))
-            darkModeButton.visibility = View.INVISIBLE
-        }
+        backButton.setOnClickListener { navController.navigateUp() }
+        darkModeButton.startAnimation(
+            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_out)
+        )
+        darkModeButton.visibility = View.INVISIBLE
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        activity!!.run {
-            darkModeButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in))
-            darkModeButton.visibility = View.VISIBLE
-        }
+        darkModeButton.startAnimation(
+            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_in)
+        )
+        darkModeButton.visibility = View.VISIBLE
     }
 
     private fun populateTextViews() =
-            product?.run {
-                nameTextView.text = name
-                descriptionTextView.text = description
-                quantityTextView.text = "$quantity"
-                priceTextView.text = "$$price"
-                statusTextView.text = status
-            }
+        product?.run {
+            nameTextView.text = name
+            descriptionTextView.text = description
+            quantityTextView.text = "$quantity"
+            priceTextView.text = "$$price"
+            statusTextView.text = status
+        }
 
     private fun showLoading() {
         rootCardView.visibility = View.GONE

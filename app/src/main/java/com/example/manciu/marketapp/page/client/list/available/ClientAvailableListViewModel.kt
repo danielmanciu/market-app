@@ -15,8 +15,8 @@ import timber.log.Timber
 import java.util.stream.Collectors
 
 class ClientAvailableListViewModel(
-        private val service: RemoteService,
-        private val repository: ProductRepository
+    private val service: RemoteService,
+    private val repository: ProductRepository
 ) : BaseViewModel() {
 
     val availableListLiveData: MutableLiveData<Outcome<List<ProductEntity>>> = MutableLiveData()
@@ -25,46 +25,46 @@ class ClientAvailableListViewModel(
         availableListLiveData.value = Outcome.loading(true)
 
         val d: Disposable = service.getAvailableProducts()
-                .subscribeOn(Schedulers.io())
-                .filter { it.isSuccessful }
-                .map { it.body() }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ remoteList ->
-                    remoteList?.let {
-                        val list = it.stream()
-                                .map(ProductRemoteEntity::convertRemoteToLocal)
-                                .collect(Collectors.toList())
+            .subscribeOn(Schedulers.io())
+            .filter { it.isSuccessful }
+            .map { it.body() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ remoteList ->
+                remoteList?.let {
+                    val list = it.stream()
+                        .map(ProductRemoteEntity::convertRemoteToLocal)
+                        .collect(Collectors.toList())
 
-                        availableListLiveData.value = Outcome.success(list)
-                    }
-                },
-                        { error ->
-                            Timber.e(error, "Unable to get available products list.")
-                            availableListLiveData.value = Outcome.failure(error)
-                        }
-                )
+                    availableListLiveData.value = Outcome.success(list)
+                }
+            },
+                { error ->
+                    Timber.e(error, "Unable to get available products list.")
+                    availableListLiveData.value = Outcome.failure(error)
+                }
+            )
 
         addDisposable(d)
     }
 
     fun buyProduct(product: ProductEntity, callback: (ProductEntity) -> Unit) {
         val d: Disposable = service.buyProduct(product.convertLocalToRemote())
-                .subscribeOn(Schedulers.io())
-                .filter { it.isSuccessful }
-                .map { it.body() }
-                .flatMap {
-                    repository.insertProduct(product)
+            .subscribeOn(Schedulers.io())
+            .filter { it.isSuccessful }
+            .map { it.body() }
+            .flatMap {
+                repository.insertProduct(product)
 
-                    Observable.just(it.convertRemoteToLocal())
+                Observable.just(it.convertRemoteToLocal())
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ boughtProduct ->
+                boughtProduct?.let { callback(it) }
+            },
+                { error ->
+                    Timber.e(error, "Unable to process product purchase.")
                 }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ boughtProduct ->
-                    boughtProduct?.let { callback(it) }
-                },
-                        { error ->
-                            Timber.e(error, "Unable to process product purchase.")
-                        }
-                )
+            )
 
         addDisposable(d)
     }

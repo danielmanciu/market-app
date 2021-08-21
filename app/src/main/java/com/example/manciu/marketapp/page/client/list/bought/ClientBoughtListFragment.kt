@@ -14,16 +14,18 @@ import kotlinx.android.synthetic.main.fragment_list_client.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class ClientBoughtListFragment :
-        BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
+    BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
 
     override fun getViewModelClass(): Class<ClientBoughtListViewModel> =
-            ClientBoughtListViewModel::class.java
+        ClientBoughtListViewModel::class.java
 
     private lateinit var productsAdapter: ClientBoughtListAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_list_client, container, false)
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_list_client, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,14 +44,6 @@ class ClientBoughtListFragment :
                 }
             }
         }
-
-        viewModel.boughtProductsLiveData.observe(this, Observer {
-           when(it) {
-
-           }
-        })
-
-
 
         clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
             viewModel.getBoughtProductsLocal()

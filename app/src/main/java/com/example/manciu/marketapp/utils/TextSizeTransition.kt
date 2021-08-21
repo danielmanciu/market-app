@@ -51,6 +51,7 @@ class TextSizeTransition @JvmOverloads constructor(
         }
     }
 
+    @Suppress("ReturnCount")
     override fun createAnimator(
         sceneRoot: ViewGroup,
         startValues: TransitionValues?,

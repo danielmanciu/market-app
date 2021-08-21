@@ -33,8 +33,10 @@ import okhttp3.WebSocketListener
 import timber.log.Timber
 import javax.inject.Inject
 
-class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, ClientAvailableListViewModelProvider>(),
-        BuyDialogListener {
+@Suppress("TooManyFunctions")
+class ClientAvailableListFragment :
+    BaseFragment<ClientAvailableListViewModel, ClientAvailableListViewModelProvider>(),
+    BuyDialogListener {
 
     override fun getViewModelClass() = ClientAvailableListViewModel::class.java
 
@@ -61,7 +63,11 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     private lateinit var productsAdapter: ClientAvailableListAdapter
     private lateinit var buyDialogFragment: BuyDialogFragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_list_client, container, false)
     }
 
@@ -107,22 +113,23 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     override fun onDestroy() {
         super.onDestroy()
 
-        webSocket.close(1000, "Successfully closed web socket.")
+        webSocket.close(WEB_SOCKET_CLOSE_STATUS_CODE, "Successfully closed web socket.")
     }
 
     private fun setupRecyclerViewAndWebSocket() {
-        productsAdapter = ClientAvailableListAdapter(buyProductClickCallback, showProductDetailsClickCallback)
+        productsAdapter =
+            ClientAvailableListAdapter(buyProductClickCallback, showProductDetailsClickCallback)
 
         val request: Request = Request.Builder()
-                .url(WEB_SOCKET_URL)
-                .build()
+            .url(WEB_SOCKET_URL)
+            .build()
 
         webSocket = httpClient.newWebSocket(request, object : WebSocketListener() {
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
 
                 val product: ProductRemoteEntity =
-                        Gson().fromJson<ProductRemoteEntity>(text, ProductRemoteEntity::class.java)
+                    Gson().fromJson<ProductRemoteEntity>(text, ProductRemoteEntity::class.java)
 
                 productsAdapter.addProductAndNotify(product.convertRemoteToLocal())
             }
@@ -131,7 +138,8 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
         productRecyclerView.run {
             adapter = productsAdapter
             layoutManager = GridLayoutManager(context, 2)
-            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
+            layoutAnimation =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
         }
     }
 
@@ -159,21 +167,30 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
         productBundle.putParcelable(PRODUCT, product)
 
         val extras = FragmentNavigatorExtras(
-                productView.rootCardView to ViewCompat.getTransitionName(productView.rootCardView)!!,
-                productView.productNameTextView to ViewCompat.getTransitionName(productView.productNameTextView)!!,
-                productView.quantityIcon to ViewCompat.getTransitionName(productView.quantityIcon)!!,
-                productView.productQuantityTextView to ViewCompat.getTransitionName(productView.productQuantityTextView)!!,
-                productView.priceIcon to ViewCompat.getTransitionName(productView.priceIcon)!!,
-                productView.productPriceTextView to ViewCompat.getTransitionName(productView.productPriceTextView)!!
+            productView.rootCardView to ViewCompat.getTransitionName(productView.rootCardView)!!,
+            productView.productNameTextView to ViewCompat.getTransitionName(productView.productNameTextView)!!,
+            productView.quantityIcon to ViewCompat.getTransitionName(productView.quantityIcon)!!,
+            productView.productQuantityTextView to ViewCompat.getTransitionName(productView.productQuantityTextView)!!,
+            productView.priceIcon to ViewCompat.getTransitionName(productView.priceIcon)!!,
+            productView.productPriceTextView to ViewCompat.getTransitionName(productView.productPriceTextView)!!
         )
 
-        navController.navigate(R.id.action_viewPagerFragment_to_detailsFragment, productBundle, null, extras)
+        navController.navigate(
+            R.id.action_viewPagerFragment_to_detailsFragment,
+            productBundle,
+            null,
+            extras
+        )
     }
 
     private fun showBuyDialog(product: ProductEntity, position: Int) {
-        fragmentManager?.let {
-            buyDialogFragment = BuyDialogFragment.createBuyDialogFragment(it, this, product, position)
-        }
+        buyDialogFragment =
+            BuyDialogFragment.createBuyDialogFragment(
+                parentFragmentManager,
+                this,
+                product,
+                position
+            )
     }
 
     private fun dismissBuyDialog() = buyDialogFragment.dismiss()
@@ -189,4 +206,8 @@ class ClientAvailableListFragment : BaseFragment<ClientAvailableListViewModel, C
     }
 
     private fun showError(message: String?) = clientListEmptyLayout.showError(message)
+
+    private companion object {
+        const val WEB_SOCKET_CLOSE_STATUS_CODE = 1000
+    }
 }

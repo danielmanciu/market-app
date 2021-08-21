@@ -3,6 +3,7 @@ package com.example.manciu.marketapp.data.remote
 import com.example.manciu.marketapp.data.remote.ApiConstants.ACCEPT_HEADER
 import com.example.manciu.marketapp.data.remote.ApiConstants.API_BASE_URL
 import com.example.manciu.marketapp.data.remote.ApiConstants.APPLICATION_JSON
+import com.example.manciu.marketapp.data.remote.ApiConstants.TIMEOUT_RETROFIT
 import com.example.manciu.marketapp.di.scope.ApplicationScope
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -47,9 +48,9 @@ class ApiModule {
             OkHttpClient.Builder()
                     .addInterceptor(interceptor)
                     .addInterceptor(loggingInterceptor)
-                    .readTimeout(15, TimeUnit.SECONDS)
-                    .connectTimeout(15, TimeUnit.SECONDS)
-                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT_RETROFIT, TimeUnit.SECONDS)
+                    .connectTimeout(TIMEOUT_RETROFIT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT_RETROFIT, TimeUnit.SECONDS)
                     .build()
 
     @Provides

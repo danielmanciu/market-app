@@ -12,5 +12,5 @@ class ClientAvailableListModule {
     @Provides
     @FragmentScope
     internal fun provideViewModelProvider(service: RemoteService, repository: ProductRepository) =
-            ClientAvailableListViewModelProvider(service, repository)
+        ClientAvailableListViewModelProvider(service, repository)
 }

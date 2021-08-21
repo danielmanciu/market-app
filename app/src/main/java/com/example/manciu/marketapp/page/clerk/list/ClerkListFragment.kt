@@ -43,8 +43,11 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_list_clerk, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_list_clerk, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,9 +74,9 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
             }
         }
 
-        listClerkEmptyLayout.setRetryClickListener(View.OnClickListener {
+        listClerkEmptyLayout.setRetryClickListener {
             viewModel.getAllProductsRemote()
-        })
+        }
 
         clerkListSwipeRefreshLayout.setOnRefreshListener {
             viewModel.getAllProductsRemote()
@@ -98,7 +101,8 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
         productRecyclerView.run {
             adapter = productsAdapter
             layoutManager = GridLayoutManager(context, 2)
-            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
+            layoutAnimation =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_from_bottom)
         }
     }
 
@@ -115,7 +119,12 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
             productView.productPriceTextView to ViewCompat.getTransitionName(productView.productPriceTextView)!!
         )
 
-        navController.navigate(R.id.action_listFragmentClerk_to_detailsFragment, productBundle, null, extras)
+        navController.navigate(
+            R.id.action_listFragmentClerk_to_detailsFragment,
+            productBundle,
+            null,
+            extras
+        )
     }
 
 
@@ -144,5 +153,4 @@ class ClerkListFragment : BaseFragment<ClerkListViewModel, ClerkListViewModelPro
         productRecyclerView.visibility = View.GONE
         listClerkEmptyLayout.showError(message)
     }
-
 }

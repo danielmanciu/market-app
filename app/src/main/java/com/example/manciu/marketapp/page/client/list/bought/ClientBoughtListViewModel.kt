@@ -18,16 +18,17 @@ class ClientBoughtListViewModel(private val repository: ProductRepository) : Bas
         boughtProductsLiveData.value = Outcome.loading(true)
 
         val d: Disposable = repository.getBoughtProducts()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
                     boughtProductsLiveData.value = Outcome.success(it)
                 },
-                        { error ->
-                            Timber.e(error, "Unable to get product list.")
-                            boughtProductsLiveData.value = Outcome.Failure(error)
-                        }
-                )
+                { error ->
+                    Timber.e(error, "Unable to get product list.")
+                    boughtProductsLiveData.value = Outcome.Failure(error)
+                }
+            )
 
         addDisposable(d)
     }

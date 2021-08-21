@@ -9,7 +9,7 @@ import com.example.manciu.marketapp.data.local.persistence.ProductEntity
 import kotlinx.android.synthetic.main.item_product_client.view.*
 
 class ClientBoughtListAdapter :
-        RecyclerView.Adapter<ClientBoughtListAdapter.ProductViewHolder>() {
+    RecyclerView.Adapter<ClientBoughtListAdapter.ProductViewHolder>() {
 
     var products: List<ProductEntity>? = null
 
@@ -20,14 +20,14 @@ class ClientBoughtListAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_product_client, parent, false)
+            .inflate(R.layout.item_product_client, parent, false)
         view.buyButton.visibility = View.GONE
 
         return ProductViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
-            holder.bind(position)
+        holder.bind(position)
 
     override fun getItemCount() = products?.size ?: 0
 

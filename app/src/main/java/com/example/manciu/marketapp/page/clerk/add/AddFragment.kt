@@ -19,8 +19,11 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
 
     override fun getViewModelClass() = AddViewModel::class.java
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_add, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_add, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,30 +40,30 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        activity!!.run {
-            backButton.setOnClickListener { navController.navigateUp() }
-            darkModeButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out))
-            darkModeButton.visibility = View.INVISIBLE
-        }
+        backButton.setOnClickListener { navController.navigateUp() }
+        darkModeButton.startAnimation(
+            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_out)
+        )
+        darkModeButton.visibility = View.INVISIBLE
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        activity!!.run {
-            darkModeButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in))
-            darkModeButton.visibility = View.VISIBLE
-        }
+        darkModeButton.startAnimation(
+            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_in)
+        )
+        darkModeButton.visibility = View.VISIBLE
     }
 
     private fun getProductFromInputs() = ProductEntity(
-            //this id will be replaced by the server
-            id = -1,
-            name = "${nameEditText.text}",
-            description = "${descriptionEditText.text}",
-            quantity = "${quantityEditText.text}".toInt(),
-            price = "${priceEditText.text}".toInt(),
-            status = "${statusEditText.text}"
+        //this id will be replaced by the server
+        id = -1,
+        name = "${nameEditText.text}",
+        description = "${descriptionEditText.text}",
+        quantity = "${quantityEditText.text}".toInt(),
+        price = "${priceEditText.text}".toInt(),
+        status = "${statusEditText.text}"
     )
 
     private fun insertProduct() {
@@ -92,9 +95,9 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
     private fun hideLoading() = addEmptyLayout.hide()
 
     private fun areInputsEmpty(): Boolean =
-            nameEditText.text.isNullOrBlank()
-                    || descriptionEditText.text.isNullOrBlank()
-                    || quantityEditText.text.isNullOrBlank()
-                    || priceEditText.text.isNullOrBlank()
-                    || statusEditText.text.isNullOrBlank()
+        nameEditText.text.isNullOrBlank()
+                || descriptionEditText.text.isNullOrBlank()
+                || quantityEditText.text.isNullOrBlank()
+                || priceEditText.text.isNullOrBlank()
+                || statusEditText.text.isNullOrBlank()
 }

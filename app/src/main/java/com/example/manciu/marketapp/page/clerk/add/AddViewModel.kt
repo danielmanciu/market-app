@@ -18,21 +18,21 @@ class AddViewModel(private val service: RemoteService) : BaseViewModel() {
         addProductLiveData.value = Outcome.loading(true)
 
         val d: Disposable = service.insertProduct(product.convertLocalToRemote())
-                .subscribeOn(Schedulers.io())
-                .filter { it.isSuccessful }
-                .map { it.body() }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ remoteProduct ->
-                    remoteProduct?.let {
-                        val localProduct = it.convertRemoteToLocal()
-                        addProductLiveData.value = Outcome.success(localProduct)
-                    }
-                },
-                        { error ->
-                            addProductLiveData.value = Outcome.failure(error)
-                            Timber.e(error, "Unable to add product.")
-                        }
-                )
+            .subscribeOn(Schedulers.io())
+            .filter { it.isSuccessful }
+            .map { it.body() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ remoteProduct ->
+                remoteProduct?.let {
+                    val localProduct = it.convertRemoteToLocal()
+                    addProductLiveData.value = Outcome.success(localProduct)
+                }
+            },
+                { error ->
+                    addProductLiveData.value = Outcome.failure(error)
+                    Timber.e(error, "Unable to add product.")
+                }
+            )
 
         addDisposable(d)
     }

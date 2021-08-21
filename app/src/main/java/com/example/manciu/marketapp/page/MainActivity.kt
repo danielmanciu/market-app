@@ -33,7 +33,7 @@ class MainActivity : DaggerAppCompatActivity() {
         selectUserTextView.animation = AnimationUtils.loadAnimation(this, R.anim.from_bottom)
 
         AnimationUtils.loadAnimation(this, android.R.anim.fade_in).run {
-            startOffset = 500
+            startOffset = ANIMATION_START_OFFSET
             logoImage.animation = this
             clerkButton.animation = this
             clientButton.animation = this
@@ -69,5 +69,9 @@ class MainActivity : DaggerAppCompatActivity() {
         if (outValue.string != themeName) {
             recreate()
         }
+    }
+
+    private companion object {
+        const val ANIMATION_START_OFFSET = 500L
     }
 }

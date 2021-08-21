@@ -16,30 +16,30 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = TABLE_NAME)
 @Parcelize
 data class ProductEntity(
-        @PrimaryKey
-        var id: Int,
+    @PrimaryKey
+    var id: Int,
 
-        @ColumnInfo(name = COLUMN_INFO_NAME)
-        val name: String,
+    @ColumnInfo(name = COLUMN_INFO_NAME)
+    val name: String,
 
-        @ColumnInfo(name = COLUMN_INFO_DESCRIPTION)
-        val description: String,
+    @ColumnInfo(name = COLUMN_INFO_DESCRIPTION)
+    val description: String,
 
-        @ColumnInfo(name = COLUMN_INFO_QUANTITY)
-        val quantity: Int,
+    @ColumnInfo(name = COLUMN_INFO_QUANTITY)
+    val quantity: Int,
 
-        @ColumnInfo(name = COLUMN_INFO_PRICE)
-        val price: Int,
+    @ColumnInfo(name = COLUMN_INFO_PRICE)
+    val price: Int,
 
-        @ColumnInfo(name = COLUMN_INFO_STATUS)
-        val status: String
+    @ColumnInfo(name = COLUMN_INFO_STATUS)
+    val status: String
 ) : Parcelable {
     fun convertLocalToRemote() = ProductRemoteEntity(
-            id,
-            name,
-            description,
-            quantity,
-            price,
-            status
+        id,
+        name,
+        description,
+        quantity,
+        price,
+        status
     )
 }

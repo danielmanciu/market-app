@@ -11,6 +11,7 @@ object ApiConstants {
 
     const val ACCEPT_HEADER = "Accept"
     const val APPLICATION_JSON = "application/json"
+    const val TIMEOUT_RETROFIT = 15L
 
     object ProductsApi {
         const val BUY_PRODUCT = "/buyProduct"
