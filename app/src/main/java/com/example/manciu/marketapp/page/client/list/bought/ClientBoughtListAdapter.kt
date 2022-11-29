@@ -1,12 +1,12 @@
 package com.example.manciu.marketapp.page.client.list.bought
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.local.persistence.ProductEntity
-import kotlinx.android.synthetic.main.item_product_client.view.*
+import com.example.manciu.marketapp.databinding.ItemProductClientBinding
 
 class ClientBoughtListAdapter :
     RecyclerView.Adapter<ClientBoughtListAdapter.ProductViewHolder>() {
@@ -19,11 +19,9 @@ class ClientBoughtListAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_product_client, parent, false)
-        view.buyButton.visibility = View.GONE
-
-        return ProductViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemProductClientBinding.inflate(inflater, parent, false)
+        return ProductViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
@@ -31,16 +29,17 @@ class ClientBoughtListAdapter :
 
     override fun getItemCount() = products?.size ?: 0
 
-    inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ProductViewHolder(private val binding: ItemProductClientBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
-            val product: ProductEntity = products!![position]
+            val product = products?.get(position) ?: return
 
-            itemView.run {
-                productNameTextView.text = product.name
-                productQuantityTextView.text = "${product.quantity}"
-                productPriceTextView.text = "$${product.price}"
-            }
+            binding.productNameTextView.text = product.name
+            binding.productQuantityTextView.text = product.quantity.toString()
+            binding.productPriceTextView.text = "$${product.price}"
+            binding.buyButton.isVisible = false
         }
     }
 }

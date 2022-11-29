@@ -4,52 +4,53 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
+import com.example.manciu.marketapp.databinding.FragmentListClientBinding
 import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.observeNonNull
-import kotlinx.android.synthetic.main.fragment_list_client.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class ClientBoughtListFragment :
     BaseFragment<ClientBoughtListViewModel, ClientBoughtListViewModelProvider>() {
 
+    private lateinit var productsAdapter: ClientBoughtListAdapter
+    private lateinit var binding: FragmentListClientBinding
+
     override fun getViewModelClass(): Class<ClientBoughtListViewModel> =
         ClientBoughtListViewModel::class.java
-
-    private lateinit var productsAdapter: ClientBoughtListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_list_client, container, false)
+    ): View =
+        FragmentListClientBinding.inflate(inflater, container, false).also { binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.boughtProductsLiveData.observeNonNull(this) {
+        viewModel.boughtProductsLiveData.observeNonNull(viewLifecycleOwner) {
             when (it) {
                 is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
                 is Outcome.Success -> {
                     productsAdapter.setProductList(it.data)
                     hideLoading()
-                    clientListSwipeRefreshLayout.isRefreshing = false
+                    binding.clientListSwipeRefreshLayout.isRefreshing = false
                 }
                 is Outcome.Failure -> {
                     showError(it.error.localizedMessage)
-                    clientListSwipeRefreshLayout.isRefreshing = false
+                    binding.clientListSwipeRefreshLayout.isRefreshing = false
                 }
             }
         }
 
-        clientListEmptyLayout.setRetryClickListener(View.OnClickListener {
+        binding.clientListEmptyLayout.setRetryClickListener {
             viewModel.getBoughtProductsLocal()
-        })
+        }
 
-        clientListSwipeRefreshLayout.setOnRefreshListener {
+        binding.clientListSwipeRefreshLayout.setOnRefreshListener {
             viewModel.getBoughtProductsLocal()
         }
 
@@ -68,23 +69,23 @@ class ClientBoughtListFragment :
     private fun setupRecyclerView() {
         productsAdapter = ClientBoughtListAdapter()
 
-        productRecyclerView.run {
+        binding.productRecyclerView.run {
             adapter = productsAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
 
     private fun showLoading() {
-        productRecyclerView.visibility = View.GONE
-        clientListEmptyLayout.showLoading()
+        binding.productRecyclerView.isVisible = false
+        binding.clientListEmptyLayout.showLoading()
     }
 
     private fun hideLoading() {
-        productRecyclerView.visibility = View.VISIBLE
-        clientListEmptyLayout.hide()
+        binding.productRecyclerView.isVisible = true
+        binding.clientListEmptyLayout.hide()
     }
 
     private fun showError(message: String?) {
-        clientListEmptyLayout.showError(message)
+        binding.clientListEmptyLayout.showError(message)
     }
 }

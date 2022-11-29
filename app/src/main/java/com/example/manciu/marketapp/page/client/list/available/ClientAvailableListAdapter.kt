@@ -1,14 +1,13 @@
 package com.example.manciu.marketapp.page.client.list.available
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.local.persistence.ProductEntity
+import com.example.manciu.marketapp.databinding.ItemProductClientBinding
 import com.example.manciu.marketapp.utils.callback.ItemClickCallback
 import com.example.manciu.marketapp.utils.callback.ItemPositionClickCallback
-import kotlinx.android.synthetic.main.item_product_client.view.*
 
 class ClientAvailableListAdapter(
     private val buyClickCallback: ItemPositionClickCallback,
@@ -31,7 +30,7 @@ class ClientAvailableListAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return products!![position].id.toLong()
+        return products?.get(position)?.id?.toLong() ?: 0
     }
 
     fun changeProductAndNotify(product: ProductEntity, position: Int) =
@@ -45,16 +44,16 @@ class ClientAvailableListAdapter(
         }
 
     private fun deleteProductAndNotify(position: Int) =
-        products?.run {
-            this.removeAt(position)
+        products?.let {
+            it.removeAt(position)
             notifyItemRemoved(position)
-            notifyItemRangeChanged(position, this.size)
+            notifyItemRangeChanged(position, it.size)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_product_client, parent, false)
-        return ProductViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemProductClientBinding.inflate(inflater, parent, false)
+        return ProductViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
@@ -62,35 +61,35 @@ class ClientAvailableListAdapter(
 
     override fun getItemCount() = products?.size ?: 0
 
-    inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ProductViewHolder(private val binding: ItemProductClientBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(
             position: Int,
             showDetailsClickCallback: ItemClickCallback,
             buyClickCallback: ItemPositionClickCallback
         ) {
-            val product: ProductEntity = products!![position]
+            val product: ProductEntity = products?.get(position) ?: return
             val id: Int = product.id
 
-            itemView.run {
-                productNameTextView.text = product.name
-                productQuantityTextView.text = "${product.quantity}"
-                productPriceTextView.text = "$${product.price}"
+            binding.productNameTextView.text = product.name
+            binding.productQuantityTextView.text = "${product.quantity}"
+            binding.productPriceTextView.text = "$${product.price}"
 
-                rootCardView.transitionName = "$id-rootCardView"
-                productNameTextView.transitionName = "$id-name"
-                quantityIcon.transitionName = "$id-quantityIcon"
-                productQuantityTextView.transitionName = "$id-quantity"
-                priceIcon.transitionName = "$id-priceIcon"
-                productPriceTextView.transitionName = "$id-price"
+            binding.rootCardView.transitionName = "$id-rootCardView"
+            binding.productNameTextView.transitionName = "$id-name"
+            binding.quantityIcon.transitionName = "$id-quantityIcon"
+            binding.productQuantityTextView.transitionName = "$id-quantity"
+            binding.priceIcon.transitionName = "$id-priceIcon"
+            binding.productPriceTextView.transitionName = "$id-price"
 
-                detailsClickableArea.setOnClickListener {
-                    showDetailsClickCallback.onClick(product, itemView)
-                }
+            binding.detailsClickableArea.setOnClickListener {
+                showDetailsClickCallback.onClick(product, binding)
+            }
 
-                buyButton.setOnClickListener {
-                    buyClickCallback.onClick(product, position)
-                }
+            binding.buyButton.setOnClickListener {
+                buyClickCallback.onClick(product, position)
             }
         }
     }

@@ -1,18 +1,18 @@
 package com.example.manciu.marketapp.page.client
 
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.animation.AnimationUtils
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
+import com.example.manciu.marketapp.databinding.ActivityClientBinding
 import com.example.manciu.marketapp.utils.DarkModeUtils.changeMode
 import com.example.manciu.marketapp.utils.DarkModeUtils.isDarkModeEnabled
 import com.example.manciu.marketapp.utils.recreateActivity
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class ClientActivity : DaggerAppCompatActivity() {
+
+    private lateinit var binding: ActivityClientBinding
 
     @Inject
     lateinit var themePreferences: ThemePreferences
@@ -25,9 +25,10 @@ class ClientActivity : DaggerAppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client)
+        binding = ActivityClientBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        darkModeButton.setOnClickListener {
+        binding.clientToolbar.darkModeButton.setOnClickListener {
             changeMode()
             recreateActivity(this)
             themePreferences.set(!isDarkMode)

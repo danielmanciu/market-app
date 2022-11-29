@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.local.persistence.ProductEntity
+import com.example.manciu.marketapp.databinding.FragmentAddBinding
 import com.example.manciu.marketapp.utils.Outcome
+import com.example.manciu.marketapp.utils.loadAnimation
 import com.example.manciu.marketapp.utils.observeNonNull
 import com.example.manciu.marketapp.utils.showShortToast
-import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 @Suppress("TooManyFunctions")
 class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
+
+    private lateinit var binding: FragmentAddBinding
 
     override fun getViewModelClass() = AddViewModel::class.java
 
@@ -23,47 +27,43 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_add, container, false)
+    ): View = FragmentAddBinding.inflate(inflater, container, false).also { binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        confirmButton.setOnClickListener {
+        binding.confirmButton.setOnClickListener {
             insertProduct()
         }
 
-        addEmptyLayout.setRetryClickListener(View.OnClickListener {
+        binding.addEmptyLayout.setRetryClickListener {
             insertProduct()
-        })
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         backButton.setOnClickListener { navController.navigateUp() }
-        darkModeButton.startAnimation(
-            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_out)
-        )
-        darkModeButton.visibility = View.INVISIBLE
+        darkModeButton.startAnimation(requireActivity().loadAnimation(R.anim.pop_out))
+        darkModeButton.isInvisible = true
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        darkModeButton.startAnimation(
-            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_in)
-        )
-        darkModeButton.visibility = View.VISIBLE
+        darkModeButton.startAnimation(requireActivity().loadAnimation(R.anim.pop_in))
+        darkModeButton.isVisible = true
     }
 
     private fun getProductFromInputs() = ProductEntity(
-        //this id will be replaced by the server
+        //this id will be replaced by the binding.server
         id = -1,
-        name = "${nameEditText.text}",
-        description = "${descriptionEditText.text}",
-        quantity = "${quantityEditText.text}".toInt(),
-        price = "${priceEditText.text}".toInt(),
-        status = "${statusEditText.text}"
+        name = "${binding.nameEditText.text}",
+        description = "${binding.descriptionEditText.text}",
+        quantity = "${binding.quantityEditText.text}".toInt(),
+        price = "${binding.priceEditText.text}".toInt(),
+        status = "${binding.statusEditText.text}"
     )
 
     private fun insertProduct() {
@@ -76,7 +76,7 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
 
         viewModel.insertProductRemote(product)
 
-        viewModel.addProductLiveData.observeNonNull(this) {
+        viewModel.addProductLiveData.observeNonNull(viewLifecycleOwner) {
             when (it) {
                 is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
                 is Outcome.Success -> {
@@ -88,16 +88,16 @@ class AddFragment : BaseFragment<AddViewModel, AddViewModelProvider>() {
         }
     }
 
-    private fun showError(error: String?) = addEmptyLayout.showError(error)
+    private fun showError(error: String?) = binding.addEmptyLayout.showError(error)
 
-    private fun showLoading() = addEmptyLayout.showLoading()
+    private fun showLoading() = binding.addEmptyLayout.showLoading()
 
-    private fun hideLoading() = addEmptyLayout.hide()
+    private fun hideLoading() = binding.addEmptyLayout.hide()
 
     private fun areInputsEmpty(): Boolean =
-        nameEditText.text.isNullOrBlank()
-                || descriptionEditText.text.isNullOrBlank()
-                || quantityEditText.text.isNullOrBlank()
-                || priceEditText.text.isNullOrBlank()
-                || statusEditText.text.isNullOrBlank()
+        binding.nameEditText.text.isNullOrBlank()
+                || binding.descriptionEditText.text.isNullOrBlank()
+                || binding.quantityEditText.text.isNullOrBlank()
+                || binding.priceEditText.text.isNullOrBlank()
+                || binding.statusEditText.text.isNullOrBlank()
 }

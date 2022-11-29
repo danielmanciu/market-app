@@ -5,23 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.manciu.marketapp.R
-import kotlinx.android.synthetic.main.fragment_view_pager.*
+import com.example.manciu.marketapp.databinding.FragmentViewPagerBinding
 
 class ViewPagerFragment : Fragment() {
+
+    private lateinit var binding: FragmentViewPagerBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_view_pager, container, false)
+    ): View =
+        FragmentViewPagerBinding.inflate(inflater, container, false).also { binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPager.adapter = viewPagerAdapter
 
-        tabLayout.setupWithViewPager(viewPager)
+        binding.viewPager.let {
+            it.adapter = viewPagerAdapter
+            binding.tabLayout.setupWithViewPager(it)
+        }
     }
 }

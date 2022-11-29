@@ -6,15 +6,18 @@ import android.util.TypedValue
 import android.view.animation.AnimationUtils
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.data.local.preferences.ThemePreferences
+import com.example.manciu.marketapp.databinding.ActivityMainBinding
 import com.example.manciu.marketapp.page.clerk.ClerkActivity
 import com.example.manciu.marketapp.page.client.ClientActivity
 import com.example.manciu.marketapp.utils.DarkModeUtils
 import com.example.manciu.marketapp.utils.DarkModeUtils.isDarkModeEnabled
+import com.example.manciu.marketapp.utils.loadAnimation
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var themePreferences: ThemePreferences
@@ -27,29 +30,30 @@ class MainActivity : DaggerAppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        welcomeTextView.animation = AnimationUtils.loadAnimation(this, R.anim.from_top)
-        selectUserTextView.animation = AnimationUtils.loadAnimation(this, R.anim.from_bottom)
+        binding.welcomeTextView.animation = loadAnimation(R.anim.from_top)
+        binding.selectUserTextView.animation = loadAnimation(R.anim.from_bottom)
 
-        AnimationUtils.loadAnimation(this, android.R.anim.fade_in).run {
+        loadAnimation(android.R.anim.fade_in).run {
             startOffset = ANIMATION_START_OFFSET
-            logoImage.animation = this
-            clerkButton.animation = this
-            clientButton.animation = this
+            binding.logoImage.animation = this
+            binding.clerkButton.animation = this
+            binding.clientButton.animation = this
         }
 
-        clerkButton.setOnClickListener {
+        binding.clerkButton.setOnClickListener {
             val intent = Intent(this, ClerkActivity::class.java)
             startActivity(intent)
         }
 
-        clientButton.setOnClickListener {
+        binding.clientButton.setOnClickListener {
             val intent = Intent(this, ClientActivity::class.java)
             startActivity(intent)
         }
 
-        darkModeButton.setOnClickListener {
+        binding.darkModeButton.setOnClickListener {
             DarkModeUtils.changeMode()
             recreate()
             themePreferences.set(!isDarkMode)

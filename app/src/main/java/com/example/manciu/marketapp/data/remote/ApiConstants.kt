@@ -3,11 +3,12 @@ package com.example.manciu.marketapp.data.remote
 object ApiConstants {
 
 //    values for running on AVD
-//    const val API_BASE_URL = "http://10.0.2.2:2024"
-//    const val WEB_SOCKET_URL = "ws://10.0.2.2.106:2024"
+    const val API_BASE_URL = "http://10.0.2.2:2024"
+    const val WEB_SOCKET_URL = "ws://10.0.2.2:2024"
 
-    const val API_BASE_URL = "http://192.168.16.104:2024"
-    const val WEB_SOCKET_URL = "ws://192.168.16.104:2024"
+//    values for running using the remote server
+//    const val API_BASE_URL = "http://market-app.eu-central-1.elasticbeanstalk.com/"
+//    const val WEB_SOCKET_URL = "ws://192.168.16.104:2024"
 
     const val ACCEPT_HEADER = "Accept"
     const val APPLICATION_JSON = "application/json"

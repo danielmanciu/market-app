@@ -4,23 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.transition.TransitionInflater
 import com.example.manciu.marketapp.R
 import com.example.manciu.marketapp.base.BaseFragment
 import com.example.manciu.marketapp.data.local.persistence.ProductEntity
+import com.example.manciu.marketapp.databinding.FragmentDetailsBinding
 import com.example.manciu.marketapp.utils.EnterSharedElementCallback
 import com.example.manciu.marketapp.utils.Outcome
 import com.example.manciu.marketapp.utils.PRODUCT
 import com.example.manciu.marketapp.utils.observeNonNull
-import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>() {
 
-    override fun getViewModelClass(): Class<DetailsViewModel> = DetailsViewModel::class.java
-
+    private lateinit var binding: FragmentDetailsBinding
     private var product: ProductEntity? = null
+
+    override fun getViewModelClass(): Class<DetailsViewModel> = DetailsViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_details, container, false)
+    ): View = FragmentDetailsBinding.inflate(layoutInflater).also { binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,34 +48,34 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
             product = args.getParcelable(PRODUCT)
             val id: Int = product!!.id
 
-            rootCardView.transitionName = "$id-rootCardView"
-            nameTextView.transitionName = "$id-name"
-            quantityIcon.transitionName = "$id-quantityIcon"
-            quantityTextView.transitionName = "$id-quantity"
-            priceIcon.transitionName = "$id-priceIcon"
-            priceTextView.transitionName = "$id-price"
+            binding.rootCardView.transitionName = "$id-rootCardView"
+            binding.nameTextView.transitionName = "$id-name"
+            binding.quantityIcon.transitionName = "$id-quantityIcon"
+            binding.quantityTextView.transitionName = "$id-quantity"
+            binding.priceIcon.transitionName = "$id-priceIcon"
+            binding.priceTextView.transitionName = "$id-price"
 
-            viewModel.productLiveData.observeNonNull(this) {
+            viewModel.productLiveData.observeNonNull(viewLifecycleOwner) {
                 when (it) {
                     is Outcome.Progress -> if (it.loading) showLoading() else hideLoading()
                     is Outcome.Success -> {
                         product = it.data
                         populateTextViews()
                         hideLoading()
-                        detailsSwipeRefreshLayout.isRefreshing = false
+                        binding.detailsSwipeRefreshLayout.isRefreshing = false
                     }
                     is Outcome.Failure -> {
                         showError(it.error.localizedMessage)
-                        detailsSwipeRefreshLayout.isRefreshing = false
+                        binding.detailsSwipeRefreshLayout.isRefreshing = false
                     }
                 }
             }
 
-            detailsEmptyLayout.setRetryClickListener(View.OnClickListener {
+            binding.detailsEmptyLayout.setRetryClickListener {
                 viewModel.getProductRemote(id)
-            })
+            }
 
-            detailsSwipeRefreshLayout.setOnRefreshListener {
+            binding.detailsSwipeRefreshLayout.setOnRefreshListener {
                 viewModel.getProductRemote(id)
             }
 
@@ -83,45 +83,47 @@ class DetailsFragment : BaseFragment<DetailsViewModel, DetailsViewModelProvider>
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+//  todo
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//
+//        binding.backButton.setOnClickListener { navController.navigateUp() }
+//        with(binding.darkModeButton) {
+//            startAnimation(requireActivity().loadAnimation(R.anim.pop_out))
+//            isInvisible = true
+//        }
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//
+//        with(binding.darkModeButton) {
+//            startAnimation(requireActivity().loadAnimation(R.anim.pop_in))
+//            isVisible = true
+//        }
+//    }
 
-        backButton.setOnClickListener { navController.navigateUp() }
-        darkModeButton.startAnimation(
-            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_out)
-        )
-        darkModeButton.visibility = View.INVISIBLE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        darkModeButton.startAnimation(
-            AnimationUtils.loadAnimation(requireActivity(), R.anim.pop_in)
-        )
-        darkModeButton.visibility = View.VISIBLE
-    }
-
-    private fun populateTextViews() =
+    private fun populateTextViews() {
         product?.run {
-            nameTextView.text = name
-            descriptionTextView.text = description
-            quantityTextView.text = "$quantity"
-            priceTextView.text = "$$price"
-            statusTextView.text = status
+            binding.nameTextView.text = name
+            binding.descriptionTextView.text = description
+            binding.quantityTextView.text = "$quantity"
+            binding.priceTextView.text = "$$price"
+            binding.statusTextView.text = status
         }
+    }
 
     private fun showLoading() {
-        rootCardView.visibility = View.GONE
-        detailsEmptyLayout.showLoading()
+        binding.rootCardView.isVisible = false
+        binding.detailsEmptyLayout.showLoading()
     }
 
     private fun hideLoading() {
-        rootCardView.visibility = View.VISIBLE
-        detailsEmptyLayout.hide()
+        binding.rootCardView.isVisible = true
+        binding.detailsEmptyLayout.hide()
     }
 
     private fun showError(message: String?) {
-        detailsEmptyLayout.showError(message)
+        binding.detailsEmptyLayout.showError(message)
     }
 }
