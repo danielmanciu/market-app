@@ -3,14 +3,13 @@ package com.example.manciu.marketapp.utils
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.transition.Transition
+import android.transition.TransitionValues
 import android.util.AttributeSet
 import android.util.Property
 import android.util.TypedValue
 import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
 import android.widget.TextView
-import androidx.transition.Transition
-import androidx.transition.TransitionValues
 
 class TextSizeTransition @JvmOverloads constructor(
     context: Context,
