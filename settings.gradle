@@ -1,1 +1,14 @@
 include ':app'
+
+buildCache {
+    remote(HttpBuildCache) {
+        url = 'http://51.21.253.181/cache/'
+        allowUntrustedServer = true
+        allowInsecureProtocol = true
+        setPush(false)
+        credentials {
+            username = 'user237'
+            password = 'sy2gldax2cggslq3qxdgh4xcju'
+        }
+    }
+}
